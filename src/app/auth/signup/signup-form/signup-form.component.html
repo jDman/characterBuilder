@@ -1,1 +1,22 @@
-<p>signup-form works!</p>
+<form [formGroup]="signupForm" novalidate (submit)="signup($event)">
+  <app-input
+    [type]="'text'"
+    [controlName]="'name'"
+    [group]="signupForm"
+  ></app-input>
+  <app-input
+    [type]="'email'"
+    [controlName]="'email'"
+    [group]="signupForm"
+  ></app-input>
+  <app-input
+    [type]="'password'"
+    [controlName]="'password'"
+    [group]="signupForm"
+  ></app-input>
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>
