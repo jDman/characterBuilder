@@ -1,0 +1,20 @@
+.navigation {
+  &-list {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+  }
+
+  &-item {
+    padding: 0.2rem 0.8rem;
+  }
+
+  &-link {
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+
+    text-decoration: none;
+  }
+}
