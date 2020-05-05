@@ -52,7 +52,27 @@ describe('ControlErrorsDirectiveDirective', () => {
   it('should display an error handling component when an input control has an error after its value has been changed', async () => {
     component.form.controls.test.setValue('a');
 
-    const errorEl = fixture.debugElement.query(By.css('.input-error'));
+    const event = new Event('input', {
+      cancelable: true,
+    });
+
+    inputEl.nativeElement.dispatchEvent(event);
+
+    const errorEl = fixture.debugElement.query(By.css('.input-error-handling'));
+
+    await expect(errorEl).toBeTruthy();
+  });
+
+  it('should display an error handling component when an input control has an error after control focusout event', async () => {
+    component.form.controls.test.setValue(' ');
+
+    const event = new Event('focusout', {
+      cancelable: true,
+    });
+
+    inputEl.nativeElement.dispatchEvent(event);
+
+    const errorEl = fixture.debugElement.query(By.css('.input-error-handling'));
 
     await expect(errorEl).toBeTruthy();
   });

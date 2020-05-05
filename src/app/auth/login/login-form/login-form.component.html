@@ -1,1 +1,19 @@
-<p>login-form works!</p>
+<form [formGroup]="loginForm" novalidate (submit)="login($event)">
+  <app-input
+    [name]="'email'"
+    [type]="'email'"
+    [controlName]="'email'"
+    [group]="loginForm"
+  ></app-input>
+  <app-input
+    [name]="'password'"
+    [type]="'password'"
+    [controlName]="'password'"
+    [group]="loginForm"
+  ></app-input>
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>

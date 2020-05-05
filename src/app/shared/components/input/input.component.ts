@@ -1,5 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { FormGroup, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -7,11 +12,18 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent {
+export class InputComponent implements OnInit {
   @Input() controlName: string;
   @Input() disabled: boolean;
   @Input() group: FormGroup;
-  @Input() label: string;
+  @Input() name: string;
   @Input() placeholder = '';
+  @Input() hasError = false;
   @Input() type: 'text' | 'email' | 'hidden' | 'password';
+
+  control: AbstractControl;
+
+  ngOnInit() {
+    this.control = this.group.controls[this.controlName];
+  }
 }

@@ -1,3 +1,14 @@
-<div [formGroup]="group">
-  <input type="{{ type }}" [formControlName]="controlName" appControlErrors />
+<div
+  [formGroup]="group"
+  class="input-container"
+  [ngClass]="{ 'input-error': control.errors && control.touched }"
+>
+  <label for="{{ name }}" class="input-label">{{ name }}: </label>
+  <input
+    name="{{ name }}"
+    type="{{ type }}"
+    [formControlName]="controlName"
+    appControlErrors
+    class="input-control"
+  />
 </div>

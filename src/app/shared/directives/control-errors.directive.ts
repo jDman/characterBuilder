@@ -2,22 +2,32 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
-  OnInit,
   OnDestroy,
   ViewContainerRef,
+  HostListener,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 import { InputErrorHandlerComponent } from '../components/input-error-handler/input-error-handler.component';
 
 @Directive({
   selector: '[appControlErrors]',
 })
-export class ControlErrorsDirective implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+export class ControlErrorsDirective implements OnDestroy {
   private componentRef: ComponentRef<InputErrorHandlerComponent>;
+
+  @HostListener('input')
+  @HostListener('focusout')
+  hasErrorsCheck(): void {
+    if (this.control.errors) {
+      this.componentRef = this.createComponentRef(
+        Object.keys(this.control.errors)
+      );
+    } else if (this.componentRef) {
+      this.viewContainer.clear();
+      this.componentRef.destroy();
+    }
+  }
 
   constructor(
     private control: NgControl,
@@ -25,25 +35,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
     private resolver: ComponentFactoryResolver
   ) {}
 
-  ngOnInit() {
-    this.control.valueChanges
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        if (this.control.errors) {
-          this.componentRef = this.createComponentRef(
-            Object.keys(this.control.errors)
-          );
-        } else if (this.componentRef) {
-          this.viewContainer.clear();
-          this.componentRef.destroy();
-        }
-      });
-  }
-
   ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-
     if (this.componentRef) {
       this.componentRef.destroy();
     }
