@@ -1,0 +1,20 @@
+<div class="additional-character-information">
+  <div
+    *ngFor="let option of additionalCharacterUpdateOptions"
+    class="additional-character-information__item"
+    (click)="updateSelection(option.title)"
+  >
+    <span class="additional-character-information__selection">{{
+      option.title
+    }}</span>
+  </div>
+
+  <div
+    class="additional-character-information__terminal"
+    [ngSwitch]="selection"
+  >
+    <pre *ngSwitchCase="'abilities'">Abilities</pre>
+    <pre *ngSwitchCase="'equipment'">Equipment</pre>
+    <pre *ngSwitchCase="'traits'">Traits</pre>
+  </div>
+</div>
