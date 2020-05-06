@@ -76,4 +76,18 @@ describe('ControlErrorsDirectiveDirective', () => {
 
     await expect(errorEl).toBeTruthy();
   });
+
+  it('should display an error handling component when an input control has an error after control onchange event', async () => {
+    component.form.controls.test.setValue(' ');
+
+    const event = new Event('onchange', {
+      cancelable: true,
+    });
+
+    inputEl.nativeElement.dispatchEvent(event);
+
+    const errorEl = fixture.debugElement.query(By.css('.input-error-handling'));
+
+    await expect(errorEl).toBeTruthy();
+  });
 });

@@ -1,1 +1,59 @@
-<p>character-base-form works!</p>
+<form novalidate [formGroup]="characterBaseForm" (submit)="create($event)">
+  <app-input
+    [name]="'name'"
+    [type]="'text'"
+    [controlName]="'name'"
+    [group]="characterBaseForm"
+  ></app-input>
+
+  <app-select
+    [name]="'background'"
+    [controlName]="'background'"
+    [group]="characterBaseForm"
+    [options]="[
+      { label: 'Acolyte', value: 'acolyte' },
+      { label: 'Criminal', value: 'criminal' },
+      { label: 'Folk Hero', value: 'folk_hero' },
+      { label: 'Noble', value: 'noble' },
+      { label: 'Sage', value: 'sage' },
+      { label: 'Soldier', value: 'soldier' }
+    ]"
+  >
+  </app-select>
+
+  <app-textarea
+    [name]="'additional info'"
+    [controlName]="'additional_info'"
+    [group]="characterBaseForm"
+  ></app-textarea>
+
+  <app-select
+    [name]="'class'"
+    [controlName]="'classType'"
+    [group]="characterBaseForm"
+    [options]="[
+      { label: 'Warrior', value: 'warrior' },
+      { label: 'Rogue', value: 'rogue' },
+      { label: 'Mage', value: 'mage' }
+    ]"
+  >
+  </app-select>
+
+  <app-select
+    [name]="'race'"
+    [controlName]="'raceType'"
+    [group]="characterBaseForm"
+    [options]="[
+      { label: 'Human', value: 'human' },
+      { label: 'Elf', value: 'elf' },
+      { label: 'Dwarf', value: 'dwarf' }
+    ]"
+  >
+  </app-select>
+
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>

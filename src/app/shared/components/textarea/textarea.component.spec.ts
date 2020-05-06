@@ -1,27 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 
-import { InputComponent } from './input.component';
+import { TextareaComponent } from './textarea.component';
 
-describe('InputComponent', () => {
-  let component: InputComponent;
-  let fixture: ComponentFixture<InputComponent>;
+describe('TextareaComponent', () => {
+  let component: TextareaComponent;
+  let fixture: ComponentFixture<TextareaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InputComponent],
       imports: [ReactiveFormsModule],
+      declarations: [TextareaComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputComponent);
-
+    fixture = TestBed.createComponent(TextareaComponent);
     component = fixture.componentInstance;
     component.group = new FormGroup({ test: new FormControl() });
     component.name = 'test';
     component.controlName = 'test';
     component.placeholder = 'test placeholder';
+    component.cols = 10;
+    component.rows = 5;
     fixture.detectChanges();
   });
 

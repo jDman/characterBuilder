@@ -7,8 +7,11 @@
   <input
     name="{{ name }}"
     type="{{ type }}"
+    [readonly]="readonly"
     [formControlName]="controlName"
     appControlErrors
     class="input-control"
+    [attr.disabled]="disabled"
+    [attr.required]="required"
   />
 </div>

@@ -5,6 +5,8 @@ import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { ControlErrorsDirective } from './directives/control-errors.directive';
 import { InputErrorHandlerComponent } from './components/input-error-handler/input-error-handler.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
+import { SelectComponent } from './components/select/select.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { InputErrorHandlerComponent } from './components/input-error-handler/inp
     InputComponent,
     ControlErrorsDirective,
     InputErrorHandlerComponent,
+    TextareaComponent,
+    SelectComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
@@ -20,6 +24,8 @@ import { InputErrorHandlerComponent } from './components/input-error-handler/inp
     ButtonComponent,
     InputComponent,
     InputErrorHandlerComponent,
+    TextareaComponent,
+    SelectComponent,
   ],
 })
 export class SharedModule {}

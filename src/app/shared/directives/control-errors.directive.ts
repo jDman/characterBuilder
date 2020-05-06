@@ -16,6 +16,7 @@ import { InputErrorHandlerComponent } from '../components/input-error-handler/in
 export class ControlErrorsDirective implements OnDestroy {
   private componentRef: ComponentRef<InputErrorHandlerComponent>;
 
+  @HostListener('onchange')
   @HostListener('input')
   @HostListener('focusout')
   hasErrorsCheck(): void {

@@ -1,0 +1,19 @@
+<div
+  [formGroup]="group"
+  class="textarea-container"
+  [ngClass]="{ 'input-error': control.errors && control.touched }"
+>
+  <label for="{{ name }}" class="textarea-label">{{ name }}: </label>
+  <textarea
+    name="{{ name }}"
+    cols="{{ cols }}"
+    rows="{{ rows }}"
+    wrap="{{ wrap }}"
+    placeholder="{{ placeholder }}"
+    [readonly]="readonly"
+    [formControlName]="controlName"
+    appControlErrors
+    class="textarea-control"
+    [attr.disabled]="disabled"
+  ></textarea>
+</div>
