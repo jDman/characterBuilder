@@ -1,0 +1,24 @@
+.character-list-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  box-shadow: 0px 0px 5px 2px slategray;
+
+  &__name {
+    color: seagreen;
+  }
+
+  &__background {
+    color: slateblue;
+  }
+
+  &__class {
+    color: mediumvioletred;
+  }
+
+  &__race {
+    color: olivedrab;
+  }
+}
