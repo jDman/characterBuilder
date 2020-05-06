@@ -2,6 +2,7 @@
   <div
     *ngFor="let option of additionalCharacterUpdateOptions"
     class="additional-character-information__item"
+    [ngClass]="{ active: selection === option.title.toLocaleLowerCase() }"
     (click)="updateSelection(option.title)"
   >
     <span class="additional-character-information__selection">{{

@@ -13,6 +13,10 @@
     text-align: center;
     transition: ease-in-out 0.25s;
 
+    &.active {
+      background-color: lightgoldenrodyellow;
+    }
+
     &:hover {
       transform: scale(1.02);
     }
