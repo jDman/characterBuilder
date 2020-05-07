@@ -8,14 +8,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
-interface CharacterBase {
-  name: string;
-  background: string;
-  additional_info: string;
-  classType: string;
-  raceType: string;
-}
+import { CharacterBase } from '../../interfaces/character-base.interface';
 
 @Component({
   selector: 'app-character-base-form',

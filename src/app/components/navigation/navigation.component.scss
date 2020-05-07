@@ -17,13 +17,12 @@
       margin-left: 1rem;
     }
 
-    &:active,
     &:visited,
     &:link {
       color: darkgoldenrod;
     }
 
-    &:focus {
+    &.active {
       color: royalblue;
     }
   }

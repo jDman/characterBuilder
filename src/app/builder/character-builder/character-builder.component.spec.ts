@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CharacterBuilderComponent } from './character-builder.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CharacterBuilderComponent', () => {
   let component: CharacterBuilderComponent;
@@ -9,6 +10,7 @@ describe('CharacterBuilderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [CharacterBuilderComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();

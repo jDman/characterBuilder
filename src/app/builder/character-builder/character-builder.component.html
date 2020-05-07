@@ -1,5 +1,7 @@
 <section class="character-builder">
-  <app-character-base-form></app-character-base-form>
+  <app-character-base-form
+    (characterBaseFormSubmitted)="submitCharacterBase($event)"
+  ></app-character-base-form>
   <!-- <app-character-list-item-detail
     [name]="'Red'"
     [background]="'acolyte'"

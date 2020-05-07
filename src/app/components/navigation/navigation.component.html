@@ -1,7 +1,11 @@
 <nav class="navigation">
   <ul class="navigation-list">
     <li class="navigation-item">
-      <a class="navigation-link" routerLink="/" routerLinkActive="active"
+      <a
+        class="navigation-link"
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
         >Home</a
       >
       <a class="navigation-link" routerLink="/builder" routerLinkActive="active"
