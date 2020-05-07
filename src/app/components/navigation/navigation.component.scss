@@ -18,7 +18,8 @@
     }
 
     &:active,
-    &:visited {
+    &:visited,
+    &:link {
       color: darkgoldenrod;
     }
 

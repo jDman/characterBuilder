@@ -5,22 +5,24 @@
 >
   <label for="{{ name }}" class="select-label">{{ name }}: </label>
 
-  <div class="select-control" (click)="displayOptions()">
-    {{ currentSelection && currentSelection.label }}
-  </div>
+  <div #selectControl class="select-control">
+    <div class="select-control__trigger" (click)="displayOptions()">
+      {{ currentSelection && currentSelection.label }}
+    </div>
 
-  <ng-template [ngIf]="isOpen">
-    <ul class="select-control__list">
-      <li
-        *ngFor="let option of options"
-        class="select-control__list-item"
-        [ngClass]="{ active: currentSelection.label === option.label }"
-        (click)="selectedOption(option)"
-      >
-        {{ option.label }}
-      </li>
-    </ul>
-  </ng-template>
+    <ng-template [ngIf]="isOpen">
+      <ul class="select-control__list">
+        <li
+          *ngFor="let option of options"
+          class="select-control__list-item"
+          [ngClass]="{ active: currentSelection.label === option.label }"
+          (click)="selectedOption(option)"
+        >
+          {{ option.label }}
+        </li>
+      </ul>
+    </ng-template>
+  </div>
 
   <input
     #selectOption

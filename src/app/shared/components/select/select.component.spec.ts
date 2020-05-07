@@ -39,6 +39,20 @@ describe('SelectComponent', () => {
     expect(component.currentSelection.value).toBe('test');
   });
 
+  it('should switch isOpen property to hide a list of options when click registered outside control', () => {
+    component.displayOptions();
+
+    fixture.detectChanges();
+
+    compiled.querySelector('.select-label').click();
+
+    fixture.detectChanges();
+
+    const optionElems = compiled.querySelectorAll('.select-control__list-item');
+
+    expect(optionElems.length).toBe(0);
+  });
+
   describe('displayOptions', () => {
     it('should switch isOpen property to display a list of options', () => {
       component.displayOptions();

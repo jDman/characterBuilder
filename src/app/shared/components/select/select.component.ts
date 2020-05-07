@@ -6,6 +6,7 @@ import {
   ViewChild,
   OnDestroy,
   AfterViewInit,
+  HostListener,
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -22,7 +23,9 @@ interface CustomSelectOption {
   styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('selectControl') selectControlRef: ElementRef;
   @ViewChild('selectOption') selectOptionRef: ElementRef;
+
   @Input() controlName: string;
   @Input() disabled: boolean;
   @Input() group: FormGroup;
@@ -38,6 +41,28 @@ export class SelectComponent implements OnInit, AfterViewInit, OnDestroy {
   control: AbstractControl;
   currentSelection: CustomSelectOption;
   isOpen = false;
+
+  @HostListener('document:click', ['$event'])
+  outsideComponentCheck(event: MouseEvent) {
+    const { clientX, clientY } = event;
+
+    const {
+      top,
+      left,
+      right,
+      bottom,
+    } = this.selectControlRef.nativeElement.getBoundingClientRect();
+
+    if (
+      (clientX <= Math.floor(left) ||
+        clientX >= Math.floor(right) ||
+        clientY <= Math.floor(top) ||
+        clientY >= Math.floor(bottom)) &&
+      this.isOpen === true
+    ) {
+      this.displayOptions();
+    }
+  }
 
   ngOnInit(): void {
     this.control = this.group.controls[this.controlName];
