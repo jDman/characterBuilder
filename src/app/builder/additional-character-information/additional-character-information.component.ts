@@ -1,4 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CharacterBaseService } from 'src/app/services/character-base.service';
+import { Observable } from 'rxjs';
+import { CharacterBase } from '../interfaces/character-base.interface';
 
 @Component({
   selector: 'app-additional-character-information',
@@ -6,22 +10,24 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./additional-character-information.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdditionalCharacterInformationComponent {
-  additionalCharacterUpdateOptions = [
-    {
-      title: 'Abilities',
-    },
-    {
-      title: 'Equipment',
-    },
-    {
-      title: 'Traits',
-    },
-  ];
+export class AdditionalCharacterInformationComponent implements OnInit {
+  character$: Observable<CharacterBase>;
+  abilities$: Observable<any>;
+  equipment$: Observable<any>;
+  traits$: Observable<any>;
 
-  selection = 'abilities';
+  constructor(
+    private characterBaseService: CharacterBaseService,
+    private route: ActivatedRoute
+  ) {}
 
-  updateSelection(option: string): void {
-    this.selection = option.toLocaleLowerCase();
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    this.character$ = this.characterBaseService.fetchCharacter(id);
+  }
+
+  changeInfoType(type: string) {
+    console.log(type);
   }
 }

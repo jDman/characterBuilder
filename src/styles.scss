@@ -2,3 +2,13 @@
 form {
   padding: 0.4rem 0.8rem;
 }
+
+.pill {
+  background-color: lightgray;
+  border: 1px solid darkgray;
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.8rem;
+  &:not(:first-child) {
+    margin-left: 1rem;
+  }
+}

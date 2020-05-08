@@ -7,8 +7,10 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterListItemDetailComponent {
+  @Input() id: number;
   @Input() name: string;
   @Input() background: string;
   @Input() classType: string;
   @Input() raceType: string;
+  @Input() lastUpdated: string;
 }

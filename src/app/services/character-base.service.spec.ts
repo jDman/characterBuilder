@@ -37,9 +37,9 @@ describe('CharacterBaseService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('createCharacterBase', () => {
+  describe('createCharacter', () => {
     it('should post and return data', () => {
-      service.createCharacterBase({ ...mockCharacterBase }).subscribe((res) => {
+      service.createCharacter({ ...mockCharacterBase }).subscribe((res) => {
         expect(res).toEqual({ msg: 'success' });
       });
 

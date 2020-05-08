@@ -15,4 +15,11 @@
     Race:
     <span class="character-list-detail__race">{{ raceType }}</span>
   </p>
+  <p class="character-list-detail__item">
+    Last Updated:
+    <span class="character-list-detail__last-updated">{{
+      lastUpdated | date: "dd/MM/yy, h:mm a"
+    }}</span>
+  </p>
+  <a class="character-list-detail__link" routerLink="/builder/{{ id }}">View</a>
 </div>

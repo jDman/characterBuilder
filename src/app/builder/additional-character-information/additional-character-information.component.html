@@ -1,21 +1,13 @@
 <div class="additional-character-information">
-  <div
-    *ngFor="let option of additionalCharacterUpdateOptions"
-    class="additional-character-information__item"
-    [ngClass]="{ active: selection === option.title.toLocaleLowerCase() }"
-    (click)="updateSelection(option.title)"
-  >
-    <span class="additional-character-information__selection">{{
-      option.title
-    }}</span>
-  </div>
+  <h1>{{ (character$ | async).name }}</h1>
 
-  <div
-    class="additional-character-information__terminal"
-    [ngSwitch]="selection"
-  >
-    <pre *ngSwitchCase="'abilities'">Abilities</pre>
-    <pre *ngSwitchCase="'equipment'">Equipment</pre>
-    <pre *ngSwitchCase="'traits'">Traits</pre>
-  </div>
+  <p>
+    <span class="pill">{{ (character$ | async).background }}</span>
+    <span class="pill">{{ (character$ | async).raceType }}</span>
+    <span class="pill">{{ (character$ | async).classType }}</span>
+  </p>
+
+  <app-character-information-terminal
+    (characterInfoSelection)="changeInfoType($event)"
+  ></app-character-information-terminal>
 </div>

@@ -1,0 +1,18 @@
+<div class="character-information-terminal">
+  <div
+    *ngFor="let option of characterInfoOptions"
+    class="character-information-terminal__item"
+    [ngClass]="{ active: selection === option.title.toLocaleLowerCase() }"
+    (click)="updateSelection(option.title)"
+  >
+    <span class="character-information-terminal__selection">{{
+      option.title
+    }}</span>
+  </div>
+
+  <div class="character-information-terminal__terminal" [ngSwitch]="selection">
+    <h2 *ngSwitchCase="'abilities'">Abilities:</h2>
+    <h2 *ngSwitchCase="'equipment'">Equipment:</h2>
+    <h2 *ngSwitchCase="'traits'">Traits:</h2>
+  </div>
+</div>

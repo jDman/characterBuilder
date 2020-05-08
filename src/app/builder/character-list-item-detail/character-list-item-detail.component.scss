@@ -3,8 +3,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.25rem;
   padding: 0.8rem;
-  box-shadow: 0px 0px 5px 2px slategray;
+  border: 1px solid darkgoldenrod;
 
   &__name {
     color: seagreen;
@@ -20,5 +21,16 @@
 
   &__race {
     color: olivedrab;
+  }
+
+  &__link {
+    color: darkgoldenrod;
+    border: 1px solid darkgoldenrod;
+    text-decoration: none;
+    padding: 0.8rem 1.4rem;
+
+    &:hover {
+      background-color: lightgoldenrodyellow;
+    }
   }
 }

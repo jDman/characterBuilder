@@ -1,0 +1,28 @@
+.character-information-terminal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(25px, auto);
+  column-gap: 10px;
+  margin-top: 2rem;
+
+  &__item {
+    background-color: lightcyan;
+    border: 1px solid darkgray;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    text-align: center;
+    transition: ease-in-out 0.25s;
+
+    &.active {
+      background-color: lightgoldenrodyellow;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  &__selection {
+    font-weight: bold;
+  }
+}

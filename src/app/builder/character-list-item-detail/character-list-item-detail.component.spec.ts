@@ -20,6 +20,7 @@ describe('CharacterListItemDetailComponent', () => {
     component.background = 'A soldier in the rebel alliance.';
     component.classType = 'warrior';
     component.raceType = 'human';
+    component.lastUpdated = '2020-05-07T09:48:28.361Z';
     compiled = fixture.nativeElement;
 
     fixture.detectChanges();

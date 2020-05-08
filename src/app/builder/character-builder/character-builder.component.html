@@ -1,14 +1,18 @@
 <section class="character-builder">
+  <h2>Create a Character:</h2>
   <app-character-base-form
     (characterBaseFormSubmitted)="submitCharacterBase($event)"
   ></app-character-base-form>
-  <!-- <app-character-list-item-detail
-    [name]="'Red'"
-    [background]="'acolyte'"
-    [classType]="'warrior'"
-    [raceType]="'elf'"
-  >
-  </app-character-list-item-detail> -->
 
-  <!-- <app-additional-character-information></app-additional-character-information> -->
+  <h2>Created Characters:</h2>
+  <app-character-list-item-detail
+    *ngFor="let character of characters$ | async"
+    [id]="character.id"
+    [name]="character.name"
+    [background]="character.background"
+    [classType]="character.classType"
+    [raceType]="character.raceType"
+    [lastUpdated]="character.lastUpdated"
+  >
+  </app-character-list-item-detail>
 </section>
