@@ -1,29 +1,38 @@
 <div class="character-information-terminal">
-  <div
-    *ngFor="let option of characterInfoOptions"
-    class="character-information-terminal__item"
-    [ngClass]="{ active: selection === option.title.toLocaleLowerCase() }"
-    (click)="updateSelection(option.title)"
-  >
-    <span class="character-information-terminal__selection">{{
-      option.title
-    }}</span>
+  <div class="character-information-terminal__grid">
+    <div
+      *ngFor="let option of characterInfoOptions"
+      class="character-information-terminal__items"
+      [ngClass]="{ active: selection === option.title.toLocaleLowerCase() }"
+      (click)="updateSelection(option.title)"
+    >
+      <span class="character-information-terminal__selection">{{
+        option.title
+      }}</span>
+    </div>
   </div>
 
-  <div class="character-information-terminal__terminal" [ngSwitch]="selection">
+  <div class="character-information-terminal__window" [ngSwitch]="selection">
     <div *ngSwitchCase="'abilities'">
       <h2>Abilities:</h2>
       <app-character-abilities-form
         *ngIf="!abilities"
+        (characterAbilitiesFormSubmitted)="submitAbilities($event)"
       ></app-character-abilities-form>
     </div>
-    <div *ngSwitchCase="'equipment'">
+    <div
+      *ngSwitchCase="'equipment'"
+      class="character-information-terminal__window"
+    >
       <h2>Equipment:</h2>
       <app-character-equipment-form
         *ngIf="!equipment"
       ></app-character-equipment-form>
     </div>
-    <div *ngSwitchCase="'traits'">
+    <div
+      *ngSwitchCase="'traits'"
+      class="character-information-terminal__window"
+    >
       <h2>Traits:</h2>
       <app-character-traits-form *ngIf="!traits"></app-character-traits-form>
     </div>

@@ -45,8 +45,10 @@ export class CharacterBaseFormComponent implements OnInit {
   create(event: Event): void {
     event.preventDefault();
 
-    if (this.characterBaseForm.valid) {
-      this.characterBaseFormSubmitted.emit(this.characterBaseForm.value);
+    const { valid, value } = this.characterBaseForm;
+
+    if (valid) {
+      this.characterBaseFormSubmitted.emit(value);
     }
   }
 }

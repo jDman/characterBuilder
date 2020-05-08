@@ -5,9 +5,25 @@
 >
   <label for="{{ name }}" class="input-label">{{ name }}: </label>
   <input
+    *ngIf="type !== 'number'"
     name="{{ name }}"
     type="{{ type }}"
     placeholder="{{ placeholder }}"
+    autocomplete="off"
+    [readonly]="readonly"
+    [formControlName]="controlName"
+    appControlErrors
+    class="input-control"
+    [attr.disabled]="disabled"
+    [attr.required]="required"
+  />
+  <input
+    *ngIf="type === 'number'"
+    name="{{ name }}"
+    type="{{ type }}"
+    placeholder="{{ placeholder }}"
+    min="{{ min }}"
+    max="{{ max }}"
     autocomplete="off"
     [readonly]="readonly"
     [formControlName]="controlName"

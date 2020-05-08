@@ -1,1 +1,44 @@
-<p>character-abilities-form works!</p>
+<form novalidate [formGroup]="characterAbilitiesForm" (submit)="create($event)">
+  <app-input
+    [name]="'strength'"
+    [type]="'number'"
+    [controlName]="'strength'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+  <app-input
+    [name]="'dexterity'"
+    [type]="'number'"
+    [controlName]="'dexterity'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+  <app-input
+    [name]="'constitution'"
+    [type]="'number'"
+    [controlName]="'constitution'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+  <app-input
+    [name]="'intelligence'"
+    [type]="'number'"
+    [controlName]="'intelligence'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+  <app-input
+    [name]="'wisdom'"
+    [type]="'number'"
+    [controlName]="'wisdom'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+  <app-input
+    [name]="'charisma'"
+    [type]="'number'"
+    [controlName]="'charisma'"
+    [group]="characterAbilitiesForm"
+  ></app-input>
+
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>

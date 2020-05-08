@@ -21,7 +21,9 @@ export class InputComponent implements OnInit {
   @Input() readonly = false;
   @Input() required = false;
   @Input() hasError = false;
-  @Input() type: 'text' | 'email' | 'hidden' | 'password';
+  @Input() min = 0;
+  @Input() max = 10;
+  @Input() type: 'text' | 'email' | 'hidden' | 'password' | 'number';
 
   control: AbstractControl;
 
