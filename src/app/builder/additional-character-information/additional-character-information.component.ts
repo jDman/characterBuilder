@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { CharacterBase } from '../interfaces/character-base.interface';
 import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
 import { take } from 'rxjs/operators';
+import { CharacterEquipmentService } from 'src/app/services/character-equipment.service';
+import { CharacterTraitsService } from 'src/app/services/character-traits.service';
 
 @Component({
   selector: 'app-additional-character-information',
@@ -21,6 +23,8 @@ export class AdditionalCharacterInformationComponent implements OnInit {
   constructor(
     private characterBaseService: CharacterBaseService,
     private abilitiesService: CharacterAbilitiesService,
+    private equipmentService: CharacterEquipmentService,
+    private traitsService: CharacterTraitsService,
     private route: ActivatedRoute
   ) {}
 
@@ -29,8 +33,12 @@ export class AdditionalCharacterInformationComponent implements OnInit {
 
     this.characterBaseService.fetchCharacter(id).pipe(take(1)).subscribe();
     this.abilitiesService.fetchCharacterAbilities(id).pipe(take(1)).subscribe();
+    this.equipmentService.fetchCharacterEquipment(id).pipe(take(1)).subscribe();
+    this.traitsService.fetchCharacterTraits(id).pipe(take(1)).subscribe();
 
     this.character$ = this.characterBaseService.character;
     this.abilities$ = this.abilitiesService.abilities;
+    this.equipment$ = this.equipmentService.equipment;
+    this.traits$ = this.traitsService.traits;
   }
 }

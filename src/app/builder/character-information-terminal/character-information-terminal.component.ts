@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class CharacterInformationTerminalComponent {
   @Input() abilities: any;
+  @Input() equipment: any;
+  @Input() traits: any;
 
   characterInfoOptions = [
     {
