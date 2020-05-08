@@ -27,6 +27,7 @@
       <h2>Equipment:</h2>
       <app-character-equipment-form
         *ngIf="!equipment"
+        (characterEquipmentFormSubmitted)="submitEquipment($event)"
       ></app-character-equipment-form>
     </div>
     <div

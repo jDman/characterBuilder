@@ -1,1 +1,32 @@
-<p>character-equipment-form works!</p>
+<form novalidate [formGroup]="characterEquipmentForm" (submit)="create($event)">
+  <app-input
+    [name]="'Armor Class'"
+    [type]="'number'"
+    [controlName]="'armor_class'"
+    [group]="characterEquipmentForm"
+  ></app-input>
+
+  <app-select
+    [name]="'Weapon Proficiencies'"
+    [controlName]="'weapon_proficiencies'"
+    [group]="characterEquipmentForm"
+    [options]="[
+      { label: 'Simple', value: 'simple' },
+      { label: 'Martial', value: 'martial' }
+    ]"
+  >
+  </app-select>
+
+  <app-input
+    [name]="'Wealth'"
+    [type]="'number'"
+    [controlName]="'wealth'"
+    [group]="characterEquipmentForm"
+  ></app-input>
+
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>
