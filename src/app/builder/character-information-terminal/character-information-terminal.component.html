@@ -11,8 +11,19 @@
   </div>
 
   <div class="character-information-terminal__terminal" [ngSwitch]="selection">
-    <h2 *ngSwitchCase="'abilities'">Abilities:</h2>
-    <h2 *ngSwitchCase="'equipment'">Equipment:</h2>
-    <h2 *ngSwitchCase="'traits'">Traits:</h2>
+    <div *ngSwitchCase="'abilities'">
+      <h2>Abilities:</h2>
+      <app-character-abilities-form
+        *ngIf="!abilities"
+      ></app-character-abilities-form>
+    </div>
+    <div *ngSwitchCase="'equipment'">
+      <h2>Equipment:</h2>
+      <app-character-equipment-form></app-character-equipment-form>
+    </div>
+    <div *ngSwitchCase="'traits'">
+      <h2>Traits:</h2>
+      <app-character-traits-form></app-character-traits-form>
+    </div>
   </div>
 </div>

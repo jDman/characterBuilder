@@ -37,17 +37,32 @@ describe('CharacterBaseService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('fetchAllCharacters', () => {
+    it('should get and return characters', () => {
+      const mockedResult = [{ ...mockCharacterBase, id: '1' }];
+      service.fetchAllCharacters().subscribe((res) => {
+        expect(res).toEqual(mockedResult);
+      });
+
+      const req = httpTestingController.expectOne(
+        'http://localhost:5050/api/characters'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush({ message: 'success', characters: mockedResult });
+    });
+  });
+
   describe('createCharacter', () => {
     it('should post and return data', () => {
       service.createCharacter({ ...mockCharacterBase }).subscribe((res) => {
-        expect(res).toEqual({ msg: 'success' });
+        expect(res).toEqual({ message: 'success' });
       });
 
       const req = httpTestingController.expectOne(
         'http://localhost:5050/api/character/add'
       );
       expect(req.request.method).toBe('POST');
-      req.flush({ msg: 'success' });
+      req.flush({ message: 'success' });
     });
   });
 });

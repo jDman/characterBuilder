@@ -3,18 +3,27 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 
 import { CharacterBase } from '../builder/interfaces/character-base.interface';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, filter } from 'rxjs/operators';
+
+import { isNonNull } from '../utils/isNonNull';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CharacterBaseService {
   private charactersSource = new BehaviorSubject<Array<CharacterBase>>([]);
-  characters = this.charactersSource.asObservable();
+  private characterSource = new BehaviorSubject<CharacterBase>(undefined);
+
+  characters: Observable<
+    Array<CharacterBase>
+  > = this.charactersSource.asObservable().pipe(filter(isNonNull));
+  character: Observable<
+    CharacterBase
+  > = this.characterSource.asObservable().pipe(filter(isNonNull));
 
   constructor(private http: HttpClient) {}
 
-  fetchAllCharacters(): Observable<any> {
+  fetchAllCharacters(): Observable<Array<CharacterBase>> {
     return this.http.get<any>('http://localhost:5050/api/characters').pipe(
       map(({ characters }) => {
         this.updateCharacters(characters);
@@ -29,6 +38,7 @@ export class CharacterBaseService {
   fetchCharacter(id: string): Observable<CharacterBase> {
     return this.http.get<any>(`http://localhost:5050/api/character/${id}`).pipe(
       map(({ character }) => {
+        this.updateCharacter(character);
         return character;
       }),
       catchError((err) => {
@@ -48,5 +58,9 @@ export class CharacterBaseService {
 
   updateCharacters(characters: Array<CharacterBase>): void {
     this.charactersSource.next(characters);
+  }
+
+  updateCharacter(character: CharacterBase): void {
+    this.characterSource.next(character);
   }
 }

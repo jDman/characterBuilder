@@ -1,13 +1,13 @@
 <div class="additional-character-information">
-  <h1>{{ (character$ | async).name }}</h1>
+  <h1>{{ (character$ | async)?.name }}</h1>
 
   <p>
-    <span class="pill">{{ (character$ | async).background }}</span>
-    <span class="pill">{{ (character$ | async).raceType }}</span>
-    <span class="pill">{{ (character$ | async).classType }}</span>
+    <span class="pill">{{ (character$ | async)?.background }}</span>
+    <span class="pill">{{ (character$ | async)?.raceType }}</span>
+    <span class="pill">{{ (character$ | async)?.classType }}</span>
   </p>
 
   <app-character-information-terminal
-    (characterInfoSelection)="changeInfoType($event)"
+    [abilities]="abilities$ | async"
   ></app-character-information-terminal>
 </div>
