@@ -32,6 +32,10 @@ export class CharacterInformationTerminalComponent {
     console.log(event);
   }
 
+  submitTraits(event: Event): void {
+    console.log(event);
+  }
+
   updateSelection(option: string): void {
     this.selection = option.toLocaleLowerCase();
   }

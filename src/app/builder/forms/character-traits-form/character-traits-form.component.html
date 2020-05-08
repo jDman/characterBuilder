@@ -1,1 +1,77 @@
-<p>character-traits-form works!</p>
+<form novalidate [formGroup]="characterTraitsForm" (submit)="create($event)">
+  <app-input
+    [name]="'Ability Score Increase'"
+    [type]="'number'"
+    [controlName]="'ability_score_increase'"
+    [group]="characterTraitsForm"
+  ></app-input>
+
+  <app-input
+    [name]="'Age'"
+    [type]="'number'"
+    [max]="100"
+    [controlName]="'age'"
+    [group]="characterTraitsForm"
+  ></app-input>
+
+  <app-select
+    [name]="'Alignment'"
+    [controlName]="'alignment'"
+    [group]="characterTraitsForm"
+    [options]="[
+      { label: 'Lawful', value: 'lawful' },
+      { label: 'Neutral', value: 'neutral' },
+      { label: 'Chaotic', value: 'chaotic' }
+    ]"
+  >
+  </app-select>
+
+  <app-select
+    [name]="'Morality'"
+    [controlName]="'morality'"
+    [group]="characterTraitsForm"
+    [options]="[
+      { label: 'Good', value: 'good' },
+      { label: 'Neutral', value: 'neutral' },
+      { label: 'Evil', value: 'evil' }
+    ]"
+  >
+  </app-select>
+
+  <app-select
+    [name]="'Size'"
+    [controlName]="'size'"
+    [group]="characterTraitsForm"
+    [options]="[
+      { label: 'Small', value: 'small' },
+      { label: 'Medium', value: 'medium' },
+      { label: 'Large', value: 'large' }
+    ]"
+  >
+  </app-select>
+
+  <app-input
+    [name]="'Speed'"
+    [type]="'number'"
+    [controlName]="'speed'"
+    [group]="characterTraitsForm"
+  ></app-input>
+
+  <app-select
+    [name]="'Languages'"
+    [controlName]="'languages'"
+    [group]="characterTraitsForm"
+    [options]="[
+      { label: 'Common', value: 'common' },
+      { label: 'Dwarvish', value: 'dwarvish' },
+      { label: 'Elvish', value: 'elvish' }
+    ]"
+  >
+  </app-select>
+
+  <app-button
+    [type]="buttonType"
+    [text]="buttonText"
+    [disabled]="isDisabled | async"
+  ></app-button>
+</form>
