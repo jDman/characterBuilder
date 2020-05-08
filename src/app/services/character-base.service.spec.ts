@@ -7,6 +7,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { CharacterBaseService } from './character-base.service';
 import { CharacterBase } from '../builder/interfaces/character-base.interface';
+import { take } from 'rxjs/operators';
 
 describe('CharacterBaseService', () => {
   let service: CharacterBaseService;
@@ -52,6 +53,21 @@ describe('CharacterBaseService', () => {
     });
   });
 
+  describe('fetchCharacter', () => {
+    it('should get and return a character', () => {
+      const characterId = '1';
+      service.fetchCharacter(characterId).subscribe((res) => {
+        expect(res).toEqual(mockCharacterBase);
+      });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/character/${characterId}`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush({ message: 'success', character: mockCharacterBase });
+    });
+  });
+
   describe('createCharacter', () => {
     it('should post and return data', () => {
       service.createCharacter({ ...mockCharacterBase }).subscribe((res) => {
@@ -63,6 +79,28 @@ describe('CharacterBaseService', () => {
       );
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
+    });
+  });
+
+  describe('updateCharacters', () => {
+    it('should call next on charactersSource and update characters', () => {
+      service.updateCharacters([mockCharacterBase]);
+
+      service.characters
+        .pipe(take(1))
+        .subscribe((character) =>
+          expect(character).toEqual([mockCharacterBase])
+        );
+    });
+  });
+
+  describe('updateCharacter', () => {
+    it('should call next on characterSource and update character', () => {
+      service.updateCharacter(mockCharacterBase);
+
+      service.character
+        .pipe(take(1))
+        .subscribe((character) => expect(character).toEqual(mockCharacterBase));
     });
   });
 });
