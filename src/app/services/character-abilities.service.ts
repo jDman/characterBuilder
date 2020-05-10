@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { map, catchError, filter } from 'rxjs/operators';
+import { map, catchError, filter, distinctUntilChanged } from 'rxjs/operators';
 import { isNonNull } from '../utils/isNonNull';
 import { CharacterAbilities } from '../builder/interfaces/character-abilities.interface';
 import { CharacterAbilitiesPostData } from '../builder/interfaces/character-abilities-post-data.interface';
@@ -13,7 +13,9 @@ export class CharacterAbilitiesService {
   private abilitiesSource = new BehaviorSubject<CharacterAbilities>(undefined);
   abilities: Observable<
     CharacterAbilities
-  > = this.abilitiesSource.asObservable().pipe(filter(isNonNull));
+  > = this.abilitiesSource
+    .asObservable()
+    .pipe(filter(isNonNull), distinctUntilChanged());
 
   constructor(private http: HttpClient) {}
 
@@ -35,7 +37,6 @@ export class CharacterAbilitiesService {
       .get<any>(`http://localhost:5050/api/abilities/${characterId}`)
       .pipe(
         map(({ abilities }) => {
-          this.updateAbilities(abilities);
           return abilities;
         }),
         catchError((err) => {
@@ -45,6 +46,8 @@ export class CharacterAbilitiesService {
   }
 
   updateAbilities(abilities: CharacterAbilities): void {
-    this.abilitiesSource.next(abilities);
+    const updatedAbilities = !!abilities ? { ...abilities } : undefined;
+
+    this.abilitiesSource.next(updatedAbilities);
   }
 }

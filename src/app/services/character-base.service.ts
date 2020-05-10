@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 
 import { CharacterBase } from '../builder/interfaces/character-base.interface';
-import { catchError, map, filter } from 'rxjs/operators';
+import { catchError, map, filter, distinctUntilChanged } from 'rxjs/operators';
 
 import { isNonNull } from '../utils/isNonNull';
 
@@ -19,7 +19,9 @@ export class CharacterBaseService {
   > = this.charactersSource.asObservable().pipe(filter(isNonNull));
   character: Observable<
     CharacterBase
-  > = this.characterSource.asObservable().pipe(filter(isNonNull));
+  > = this.characterSource
+    .asObservable()
+    .pipe(filter(isNonNull), distinctUntilChanged());
 
   constructor(private http: HttpClient) {}
 
@@ -38,7 +40,6 @@ export class CharacterBaseService {
   fetchCharacter(id: string): Observable<CharacterBase> {
     return this.http.get<any>(`http://localhost:5050/api/character/${id}`).pipe(
       map(({ character }) => {
-        this.updateCharacter(character);
         return character;
       }),
       catchError((err) => {
@@ -61,6 +62,8 @@ export class CharacterBaseService {
   }
 
   updateCharacter(character: CharacterBase): void {
-    this.characterSource.next(character);
+    const updatedCharacter = !!character ? { ...character } : undefined;
+
+    this.characterSource.next(updatedCharacter);
   }
 }

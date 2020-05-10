@@ -1,7 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { CharacterBaseService } from 'src/app/services/character-base.service';
 import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
@@ -11,6 +16,9 @@ import { CharacterTraitsService } from 'src/app/services/character-traits.servic
 import { CharacterAbilitiesPostData } from '../interfaces/character-abilities-post-data.interface';
 import { CharacterEquipmentPostData } from '../interfaces/character-equipment-post-data.interface';
 import { CharacterTraitsPostData } from '../interfaces/character-traits-post-data.interface';
+import { CharacterAbilities } from '../interfaces/character-abilities.interface';
+import { CharacterEquipment } from '../interfaces/character-equipment.interface';
+import { CharacterTraits } from '../interfaces/character-traits.interface';
 
 @Component({
   selector: 'app-additional-character-information',
@@ -20,9 +28,11 @@ import { CharacterTraitsPostData } from '../interfaces/character-traits-post-dat
 })
 export class AdditionalCharacterInformationComponent implements OnInit {
   character$: Observable<CharacterBase>;
-  abilities$: Observable<any>;
-  equipment$: Observable<any>;
-  traits$: Observable<any>;
+  abilities$: Observable<CharacterAbilities>;
+  equipment$: Observable<CharacterEquipment>;
+  traits$: Observable<CharacterTraits>;
+
+  private characterId: string;
 
   constructor(
     private characterBaseService: CharacterBaseService,
@@ -33,12 +43,17 @@ export class AdditionalCharacterInformationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    this.characterId = this.route.snapshot.paramMap.get('id');
 
-    this.characterBaseService.fetchCharacter(id).pipe(take(1)).subscribe();
-    this.abilitiesService.fetchCharacterAbilities(id).pipe(take(1)).subscribe();
-    this.equipmentService.fetchCharacterEquipment(id).pipe(take(1)).subscribe();
-    this.traitsService.fetchCharacterTraits(id).pipe(take(1)).subscribe();
+    this.characterBaseService
+      .fetchCharacter(this.characterId)
+      .pipe(take(1))
+      .subscribe((character) =>
+        this.characterBaseService.updateCharacter(character)
+      );
+    this.fetchAbilities(this.characterId);
+    this.fetchEquipment(this.characterId);
+    this.fetchTraits(this.characterId);
 
     this.character$ = this.characterBaseService.character;
     this.abilities$ = this.abilitiesService.abilities;
@@ -46,15 +61,58 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     this.traits$ = this.traitsService.traits;
   }
 
+  fetchAbilities(id: string): void {
+    this.abilitiesService
+      .fetchCharacterAbilities(id)
+      .pipe(take(1))
+      .subscribe((abilities) =>
+        this.abilitiesService.updateAbilities(abilities)
+      );
+  }
+
+  fetchEquipment(id: string): void {
+    this.equipmentService
+      .fetchCharacterEquipment(id)
+      .pipe(take(1))
+      .subscribe((equipment) =>
+        this.equipmentService.updateEquipment(equipment)
+      );
+  }
+
+  fetchTraits(id: string): void {
+    this.traitsService
+      .fetchCharacterTraits(id)
+      .pipe(take(1))
+      .subscribe((traits) => this.traitsService.updateTraits(traits));
+  }
+
   submitCharacterAbilities(data: CharacterAbilitiesPostData): void {
-    this.abilitiesService.createAbilities(data).pipe(take(1)).subscribe();
+    this.abilitiesService
+      .createAbilities(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchAbilities(this.characterId),
+        (err) => console.error(err)
+      );
   }
 
   submitCharacterEquipment(data: CharacterEquipmentPostData): void {
-    this.equipmentService.createEquipment(data).pipe(take(1)).subscribe();
+    this.equipmentService
+      .createEquipment(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchEquipment(this.characterId),
+        (err) => console.error(err)
+      );
   }
 
   submitCharacterTraits(data: CharacterTraitsPostData): void {
-    this.traitsService.createTraits(data).pipe(take(1)).subscribe();
+    this.traitsService
+      .createTraits(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchTraits(this.characterId),
+        (err) => console.error(err)
+      );
   }
 }

@@ -1,22 +1,49 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject, combineLatest } from 'rxjs';
+
 import { CharacterAbilities } from '../interfaces/character-abilities.interface';
 import { CharacterEquipment } from '../interfaces/character-equipment.interface';
 import { CharacterTraits } from '../interfaces/character-traits.interface';
+import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
+import { CharacterEquipmentService } from 'src/app/services/character-equipment.service';
+import { CharacterTraitsService } from 'src/app/services/character-traits.service';
 
 @Component({
   selector: 'app-character-information-terminal',
   templateUrl: './character-information-terminal.component.html',
   styleUrls: ['./character-information-terminal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CharacterInformationTerminalComponent {
+export class CharacterInformationTerminalComponent
+  implements OnInit, OnDestroy {
   @Input() characterId: string;
-  @Input() abilities: any;
-  @Input() equipment: any;
-  @Input() traits: any;
 
   @Output() submitAbilitiesData = new EventEmitter();
   @Output() submitEquipmentData = new EventEmitter();
   @Output() submitTraitsData = new EventEmitter();
+
+  unsubscribe$ = new Subject<void>();
+
+  abilities: CharacterAbilities;
+  equipment: CharacterEquipment;
+  traits: CharacterTraits;
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private abilitiesService: CharacterAbilitiesService,
+    private equipmentService: CharacterEquipmentService,
+    private traitsService: CharacterTraitsService
+  ) {}
 
   characterInfoOptions = [
     {
@@ -31,6 +58,27 @@ export class CharacterInformationTerminalComponent {
   ];
 
   selection = 'abilities';
+
+  ngOnInit() {
+    combineLatest(
+      this.abilitiesService.abilities,
+      this.equipmentService.equipment,
+      this.traitsService.traits
+    )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(([abilities, equipment, traits]) => {
+        this.abilities = abilities;
+        this.equipment = equipment;
+        this.traits = traits;
+
+        this.cdr.detectChanges();
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   submitAbilities(abilities: CharacterAbilities): void {
     this.submitAbilitiesData.emit({ characterId: this.characterId, abilities });

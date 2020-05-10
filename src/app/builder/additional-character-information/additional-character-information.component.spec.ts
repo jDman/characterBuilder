@@ -9,6 +9,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CharacterBase } from '../interfaces/character-base.interface';
 import { CharacterAbilities } from '../interfaces/character-abilities.interface';
+import { CharacterEquipment } from '../interfaces/character-equipment.interface';
+import { CharacterTraits } from '../interfaces/character-traits.interface';
+import { CharacterEquipmentService } from 'src/app/services/character-equipment.service';
+import { CharacterTraitsService } from 'src/app/services/character-traits.service';
 
 const mockedCharacter: CharacterBase = {
   name: 'Test',
@@ -27,6 +31,22 @@ const mockedAbilities: CharacterAbilities = {
   charisma: 3,
 };
 
+const mockedEquipment: CharacterEquipment = {
+  armor_class: 1,
+  weapon_proficiencies: 'martial',
+  wealth: 100,
+};
+
+const mockedTraits: CharacterTraits = {
+  ability_score_increase: 4,
+  age: 20,
+  alignment: 'lawful',
+  morality: 'good',
+  size: 'large',
+  speed: 5,
+  languages: 'common',
+};
+
 describe('AdditionalCharacterInformationComponent', () => {
   let component: AdditionalCharacterInformationComponent;
   let fixture: ComponentFixture<AdditionalCharacterInformationComponent>;
@@ -34,17 +54,35 @@ describe('AdditionalCharacterInformationComponent', () => {
 
   let characterBaseService;
   let characterAbilitiesService;
+  let characterEquipmentService;
+  let characterTraitsService;
   let characterBaseServiceStub: Partial<CharacterBaseService>;
   let characterAbilitiesServiceStub: Partial<CharacterAbilitiesService>;
+  let characterEquipmentServiceStub: Partial<CharacterEquipmentService>;
+  let characterTraitsServiceStub: Partial<CharacterTraitsService>;
 
   characterBaseServiceStub = {
     character: of(mockedCharacter),
     fetchCharacter: jasmine.createSpy(),
+    updateCharacter: jasmine.createSpy(),
   };
 
   characterAbilitiesServiceStub = {
     abilities: of(mockedAbilities),
     fetchCharacterAbilities: jasmine.createSpy(),
+    updateAbilities: jasmine.createSpy(),
+  };
+
+  characterEquipmentServiceStub = {
+    equipment: of(mockedEquipment),
+    fetchCharacterEquipment: jasmine.createSpy(),
+    updateEquipment: jasmine.createSpy(),
+  };
+
+  characterTraitsServiceStub = {
+    traits: of(mockedTraits),
+    fetchCharacterTraits: jasmine.createSpy(),
+    updateTraits: jasmine.createSpy(),
   };
 
   beforeEach(async(() => {
@@ -56,6 +94,14 @@ describe('AdditionalCharacterInformationComponent', () => {
         {
           provide: CharacterAbilitiesService,
           useValue: characterAbilitiesServiceStub,
+        },
+        {
+          provide: CharacterEquipmentService,
+          useValue: characterEquipmentServiceStub,
+        },
+        {
+          provide: CharacterTraitsService,
+          useValue: characterTraitsServiceStub,
         },
         {
           provide: ActivatedRoute,
@@ -82,10 +128,18 @@ describe('AdditionalCharacterInformationComponent', () => {
     characterBaseService = TestBed.inject(CharacterBaseService);
 
     characterAbilitiesService = TestBed.inject(CharacterAbilitiesService);
+    characterEquipmentService = TestBed.inject(CharacterEquipmentService);
+    characterTraitsService = TestBed.inject(CharacterTraitsService);
 
     characterBaseService.fetchCharacter.and.returnValue(of(mockedCharacter));
     characterAbilitiesService.fetchCharacterAbilities.and.returnValue(
       of(mockedAbilities)
+    );
+    characterEquipmentService.fetchCharacterEquipment.and.returnValue(
+      of(mockedEquipment)
+    );
+    characterTraitsService.fetchCharacterTraits.and.returnValue(
+      of(mockedTraits)
     );
 
     fixture.detectChanges();

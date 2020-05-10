@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { filter, map, catchError } from 'rxjs/operators';
+import { filter, map, catchError, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { CharacterEquipment } from '../builder/interfaces/character-equipment.interface';
@@ -14,7 +14,9 @@ export class CharacterEquipmentService {
   private equipmentSource = new BehaviorSubject<CharacterEquipment>(undefined);
   equipment: Observable<
     CharacterEquipment
-  > = this.equipmentSource.asObservable().pipe(filter(isNonNull));
+  > = this.equipmentSource
+    .asObservable()
+    .pipe(filter(isNonNull), distinctUntilChanged());
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +38,6 @@ export class CharacterEquipmentService {
       .get<any>(`http://localhost:5050/api/equipment/${characterId}`)
       .pipe(
         map(({ equipment }) => {
-          this.updateEquipment(equipment);
           return equipment;
         }),
         catchError((err) => {
@@ -46,6 +47,8 @@ export class CharacterEquipmentService {
   }
 
   updateEquipment(equipment: CharacterEquipment): void {
-    this.equipmentSource.next(equipment);
+    const updatedEquipment = !!equipment ? { ...equipment } : undefined;
+
+    this.equipmentSource.next(updatedEquipment);
   }
 }
