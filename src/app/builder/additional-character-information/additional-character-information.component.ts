@@ -1,12 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CharacterBaseService } from 'src/app/services/character-base.service';
 import { Observable } from 'rxjs';
-import { CharacterBase } from '../interfaces/character-base.interface';
-import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
 import { take } from 'rxjs/operators';
+
+import { CharacterBaseService } from 'src/app/services/character-base.service';
+import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
+import { CharacterBase } from '../interfaces/character-base.interface';
 import { CharacterEquipmentService } from 'src/app/services/character-equipment.service';
 import { CharacterTraitsService } from 'src/app/services/character-traits.service';
+import { CharacterAbilitiesPostData } from '../interfaces/character-abilities-post-data.interface';
+import { CharacterEquipmentPostData } from '../interfaces/character-equipment-post-data.interface';
+import { CharacterTraitsPostData } from '../interfaces/character-traits-post-data.interface';
 
 @Component({
   selector: 'app-additional-character-information',
@@ -40,5 +44,17 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     this.abilities$ = this.abilitiesService.abilities;
     this.equipment$ = this.equipmentService.equipment;
     this.traits$ = this.traitsService.traits;
+  }
+
+  submitCharacterAbilities(data: CharacterAbilitiesPostData): void {
+    this.abilitiesService.createAbilities(data).pipe(take(1)).subscribe();
+  }
+
+  submitCharacterEquipment(data: CharacterEquipmentPostData): void {
+    this.equipmentService.createEquipment(data).pipe(take(1)).subscribe();
+  }
+
+  submitCharacterTraits(data: CharacterTraitsPostData): void {
+    this.traitsService.createTraits(data).pipe(take(1)).subscribe();
   }
 }

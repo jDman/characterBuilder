@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CharacterAbilities } from '../interfaces/character-abilities.interface';
+import { CharacterEquipment } from '../interfaces/character-equipment.interface';
+import { CharacterTraits } from '../interfaces/character-traits.interface';
 
 @Component({
   selector: 'app-character-information-terminal',
@@ -6,9 +9,14 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./character-information-terminal.component.scss'],
 })
 export class CharacterInformationTerminalComponent {
+  @Input() characterId: string;
   @Input() abilities: any;
   @Input() equipment: any;
   @Input() traits: any;
+
+  @Output() submitAbilitiesData = new EventEmitter();
+  @Output() submitEquipmentData = new EventEmitter();
+  @Output() submitTraitsData = new EventEmitter();
 
   characterInfoOptions = [
     {
@@ -24,16 +32,16 @@ export class CharacterInformationTerminalComponent {
 
   selection = 'abilities';
 
-  submitAbilities(event: Event): void {
-    console.log(event);
+  submitAbilities(abilities: CharacterAbilities): void {
+    this.submitAbilitiesData.emit({ characterId: this.characterId, abilities });
   }
 
-  submitEquipment(event: Event): void {
-    console.log(event);
+  submitEquipment(equipment: CharacterEquipment): void {
+    this.submitEquipmentData.emit({ characterId: this.characterId, equipment });
   }
 
-  submitTraits(event: Event): void {
-    console.log(event);
+  submitTraits(traits: CharacterTraits): void {
+    this.submitTraitsData.emit({ characterId: this.characterId, traits });
   }
 
   updateSelection(option: string): void {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { CharacterEquipment } from '../builder/interfaces/character-equipment.interface';
 import { isNonNull } from '../utils/isNonNull';
+import { CharacterEquipmentPostData } from '../builder/interfaces/character-equipment-post-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,19 @@ export class CharacterEquipmentService {
   > = this.equipmentSource.asObservable().pipe(filter(isNonNull));
 
   constructor(private http: HttpClient) {}
+
+  createEquipment(data: CharacterEquipmentPostData): Observable<any> {
+    return this.http
+      .post<any>(
+        `http://localhost:5050/api/equipment/add/${data.characterId}`,
+        { ...data.equipment }
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
 
   fetchCharacterEquipment(characterId: string): Observable<CharacterEquipment> {
     return this.http

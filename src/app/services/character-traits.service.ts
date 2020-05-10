@@ -5,6 +5,7 @@ import { filter, map, catchError } from 'rxjs/operators';
 
 import { CharacterTraits } from '../builder/interfaces/character-traits.interface';
 import { isNonNull } from '../utils/isNonNull';
+import { CharacterTraitsPostData } from '../builder/interfaces/character-traits-post-data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,18 @@ export class CharacterTraitsService {
     .pipe(filter(isNonNull));
 
   constructor(private http: HttpClient) {}
+
+  createTraits(data: CharacterTraitsPostData): Observable<any> {
+    return this.http
+      .post<any>(`http://localhost:5050/api/traits/add/${data.characterId}`, {
+        ...data.traits,
+      })
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
 
   fetchCharacterTraits(characterId: string): Observable<CharacterTraits> {
     return this.http

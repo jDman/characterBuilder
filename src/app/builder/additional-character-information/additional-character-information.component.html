@@ -8,8 +8,12 @@
   </p>
 
   <app-character-information-terminal
+    [characterId]="(character$ | async)?.id"
     [abilities]="abilities$ | async"
     [equipment]="equipment$ | async"
     [traits]="traits$ | async"
+    (submitAbilitiesData)="submitCharacterAbilities($event)"
+    (submitEquipmentData)="submitCharacterEquipment($event)"
+    (submitTraitsData)="submitCharacterTraits($event)"
   ></app-character-information-terminal>
 </div>

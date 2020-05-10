@@ -38,6 +38,23 @@ describe('CharacterAbilitiesService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('createAbilities', () => {
+    it('should post and return data', () => {
+      const characterId = '1';
+      service
+        .createAbilities({ characterId, abilities: mockedAbilities })
+        .subscribe((res) => {
+          expect(res).toEqual({ message: 'success' });
+        });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/abilities/add/${characterId}`
+      );
+      expect(req.request.method).toBe('POST');
+      req.flush({ message: 'success' });
+    });
+  });
+
   describe('fetchCharacterAbilities', () => {
     it('should get and return character abilities', () => {
       const characterId = '1';
