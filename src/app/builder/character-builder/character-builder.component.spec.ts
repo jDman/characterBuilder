@@ -25,7 +25,7 @@ describe('CharacterBuilderComponent', () => {
   let characterBaseServiceStub: Partial<CharacterBaseService>;
 
   characterBaseServiceStub = {
-    characters: of(mockedCharacters),
+    characters$: of(mockedCharacters),
     fetchAllCharacters: jasmine.createSpy(),
   };
 

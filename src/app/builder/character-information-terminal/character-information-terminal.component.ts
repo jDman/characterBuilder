@@ -61,9 +61,9 @@ export class CharacterInformationTerminalComponent
 
   ngOnInit() {
     combineLatest(
-      this.abilitiesService.abilities,
-      this.equipmentService.equipment,
-      this.traitsService.traits
+      this.abilitiesService.abilities$,
+      this.equipmentService.equipment$,
+      this.traitsService.traits$
     )
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(([abilities, equipment, traits]) => {

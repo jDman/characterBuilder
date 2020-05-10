@@ -12,7 +12,7 @@ import { CharacterEquipmentPostData } from '../builder/interfaces/character-equi
 })
 export class CharacterEquipmentService {
   private equipmentSource = new BehaviorSubject<CharacterEquipment>(undefined);
-  equipment: Observable<
+  equipment$: Observable<
     CharacterEquipment
   > = this.equipmentSource
     .asObservable()

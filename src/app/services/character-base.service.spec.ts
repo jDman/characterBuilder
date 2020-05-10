@@ -86,7 +86,7 @@ describe('CharacterBaseService', () => {
     it('should call next on charactersSource and update characters', () => {
       service.updateCharacters([mockCharacterBase]);
 
-      service.characters
+      service.characters$
         .pipe(take(1))
         .subscribe((character) =>
           expect(character).toEqual([mockCharacterBase])
@@ -98,7 +98,7 @@ describe('CharacterBaseService', () => {
     it('should call next on characterSource and update character', () => {
       service.updateCharacter(mockCharacterBase);
 
-      service.character
+      service.character$
         .pipe(take(1))
         .subscribe((character) => expect(character).toEqual(mockCharacterBase));
     });

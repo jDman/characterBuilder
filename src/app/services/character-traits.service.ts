@@ -12,7 +12,7 @@ import { CharacterTraitsPostData } from '../builder/interfaces/character-traits-
 })
 export class CharacterTraitsService {
   private traitsSource = new BehaviorSubject<CharacterTraits>(undefined);
-  traits: Observable<CharacterTraits> = this.traitsSource
+  traits$: Observable<CharacterTraits> = this.traitsSource
     .asObservable()
     .pipe(filter(isNonNull), distinctUntilChanged());
 

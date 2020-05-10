@@ -11,7 +11,7 @@ import { CharacterAbilitiesPostData } from '../builder/interfaces/character-abil
 })
 export class CharacterAbilitiesService {
   private abilitiesSource = new BehaviorSubject<CharacterAbilities>(undefined);
-  abilities: Observable<
+  abilities$: Observable<
     CharacterAbilities
   > = this.abilitiesSource
     .asObservable()

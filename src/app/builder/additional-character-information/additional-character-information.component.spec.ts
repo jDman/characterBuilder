@@ -62,25 +62,25 @@ describe('AdditionalCharacterInformationComponent', () => {
   let characterTraitsServiceStub: Partial<CharacterTraitsService>;
 
   characterBaseServiceStub = {
-    character: of(mockedCharacter),
+    character$: of(mockedCharacter),
     fetchCharacter: jasmine.createSpy(),
     updateCharacter: jasmine.createSpy(),
   };
 
   characterAbilitiesServiceStub = {
-    abilities: of(mockedAbilities),
+    abilities$: of(mockedAbilities),
     fetchCharacterAbilities: jasmine.createSpy(),
     updateAbilities: jasmine.createSpy(),
   };
 
   characterEquipmentServiceStub = {
-    equipment: of(mockedEquipment),
+    equipment$: of(mockedEquipment),
     fetchCharacterEquipment: jasmine.createSpy(),
     updateEquipment: jasmine.createSpy(),
   };
 
   characterTraitsServiceStub = {
-    traits: of(mockedTraits),
+    traits$: of(mockedTraits),
     fetchCharacterTraits: jasmine.createSpy(),
     updateTraits: jasmine.createSpy(),
   };

@@ -18,7 +18,7 @@ export class CharacterBuilderComponent implements OnInit {
 
   ngOnInit() {
     this.characterBaseService.fetchAllCharacters().pipe(take(1)).subscribe();
-    this.characters$ = this.characterBaseService.characters;
+    this.characters$ = this.characterBaseService.characters$;
   }
 
   submitCharacterBase(characterDetail: CharacterBase) {

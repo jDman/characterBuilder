@@ -75,7 +75,7 @@ describe('CharacterTraitsService', () => {
     it('should call next on characterSource and update character', () => {
       service.updateTraits(mockedTraits);
 
-      service.traits
+      service.traits$
         .pipe(take(1))
         .subscribe((equipment) => expect(equipment).toEqual(mockedTraits));
     });

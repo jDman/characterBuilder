@@ -43,21 +43,20 @@ describe('CharacterInformationTerminalComponent', () => {
   let characterAbilitiesService;
   let characterEquipmentService;
   let characterTraitsService;
-
   let characterAbilitiesServiceStub: Partial<CharacterAbilitiesService>;
   let characterEquipmentServiceStub: Partial<CharacterEquipmentService>;
   let characterTraitsServiceStub: Partial<CharacterTraitsService>;
 
   characterAbilitiesServiceStub = {
-    abilities: of(mockedAbilities),
+    abilities$: of(mockedAbilities),
   };
 
   characterEquipmentServiceStub = {
-    equipment: of(mockedEquipment),
+    equipment$: of(mockedEquipment),
   };
 
   characterTraitsServiceStub = {
-    traits: of(mockedTraits),
+    traits$: of(mockedTraits),
   };
 
   beforeEach(async(() => {

@@ -55,10 +55,10 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     this.fetchEquipment(this.characterId);
     this.fetchTraits(this.characterId);
 
-    this.character$ = this.characterBaseService.character;
-    this.abilities$ = this.abilitiesService.abilities;
-    this.equipment$ = this.equipmentService.equipment;
-    this.traits$ = this.traitsService.traits;
+    this.character$ = this.characterBaseService.character$;
+    this.abilities$ = this.abilitiesService.abilities$;
+    this.equipment$ = this.equipmentService.equipment$;
+    this.traits$ = this.traitsService.traits$;
   }
 
   fetchAbilities(id: string): void {

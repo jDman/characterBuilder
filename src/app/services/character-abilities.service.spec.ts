@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
-import { CharacterAbilitiesService } from './character-abilities.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
+import { take } from 'rxjs/operators';
 
+import { CharacterAbilitiesService } from './character-abilities.service';
 import { CharacterAbilities } from '../builder/interfaces/character-abilities.interface';
 
 const mockedAbilities: CharacterAbilities = {
@@ -67,6 +67,16 @@ describe('CharacterAbilitiesService', () => {
       );
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', abilities: mockedAbilities });
+    });
+  });
+
+  describe('updateAbilities', () => {
+    it('should call next on characterSource and update character', () => {
+      service.updateAbilities(mockedAbilities);
+
+      service.abilities$
+        .pipe(take(1))
+        .subscribe((character) => expect(character).toEqual(mockedAbilities));
     });
   });
 });

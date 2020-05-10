@@ -14,10 +14,10 @@ export class CharacterBaseService {
   private charactersSource = new BehaviorSubject<Array<CharacterBase>>([]);
   private characterSource = new BehaviorSubject<CharacterBase>(undefined);
 
-  characters: Observable<
+  characters$: Observable<
     Array<CharacterBase>
   > = this.charactersSource.asObservable().pipe(filter(isNonNull));
-  character: Observable<
+  character$: Observable<
     CharacterBase
   > = this.characterSource
     .asObservable()
