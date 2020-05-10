@@ -52,6 +52,7 @@ export class CharacterTraitsFormComponent implements OnInit {
 
     if (valid) {
       this.characterTraitsFormSubmitted.emit(value);
+      this.characterTraitsForm.reset();
     }
   }
 }

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CharacterAbilitiesFormComponent } from './character-abilities-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CharacterAbilities } from '../../interfaces/character-abilities.interface';
 
 describe('CharacterAbilitiesFormComponent', () => {
   let component: CharacterAbilitiesFormComponent;
@@ -24,5 +25,56 @@ describe('CharacterAbilitiesFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('create', () => {
+    const mockedSubmitEvent = new Event('submit');
+
+    it('should not call characterAbilitiesFormSubmitted emit if form invalid', () => {
+      spyOn(component.characterAbilitiesFormSubmitted, 'emit');
+
+      component.create(mockedSubmitEvent);
+
+      expect(
+        component.characterAbilitiesFormSubmitted.emit
+      ).not.toHaveBeenCalled();
+    });
+
+    it('should call characterAbilitiesFormSubmitted emit if form valid', () => {
+      const expectedFormValues: CharacterAbilities = {
+        strength: 5,
+        dexterity: 7,
+        constitution: 6,
+        intelligence: 8,
+        wisdom: 7,
+        charisma: 5,
+      };
+      spyOn(component.characterAbilitiesFormSubmitted, 'emit');
+
+      component.characterAbilitiesForm.controls.strength.setValue(
+        expectedFormValues.strength
+      );
+      component.characterAbilitiesForm.controls.dexterity.setValue(
+        expectedFormValues.dexterity
+      );
+      component.characterAbilitiesForm.controls.constitution.setValue(
+        expectedFormValues.constitution
+      );
+      component.characterAbilitiesForm.controls.intelligence.setValue(
+        expectedFormValues.intelligence
+      );
+      component.characterAbilitiesForm.controls.wisdom.setValue(
+        expectedFormValues.wisdom
+      );
+      component.characterAbilitiesForm.controls.charisma.setValue(
+        expectedFormValues.charisma
+      );
+
+      component.create(mockedSubmitEvent);
+
+      expect(
+        component.characterAbilitiesFormSubmitted.emit
+      ).toHaveBeenCalledWith(expectedFormValues);
+    });
   });
 });

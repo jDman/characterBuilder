@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CharacterBaseFormComponent } from './character-base-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CharacterBase } from '../../interfaces/character-base.interface';
 
 describe('CharacterBaseFormComponent', () => {
   let component: CharacterBaseFormComponent;
@@ -29,7 +30,7 @@ describe('CharacterBaseFormComponent', () => {
   describe('create', () => {
     const mockedSubmitEvent = new Event('submit');
 
-    it('should not call signupFormSubmitted emit if form invalid', () => {
+    it('should not call characterBaseFormSubmitted emit if form invalid', () => {
       spyOn(component.characterBaseFormSubmitted, 'emit');
 
       component.create(mockedSubmitEvent);
@@ -37,8 +38,8 @@ describe('CharacterBaseFormComponent', () => {
       expect(component.characterBaseFormSubmitted.emit).not.toHaveBeenCalled();
     });
 
-    it('should call signupFormSubmitted emit if form valid', () => {
-      const expectedFormValues = {
+    it('should call characterBaseFormSubmitted emit if form valid', () => {
+      const expectedFormValues: CharacterBase = {
         name: 'Tester',
         background: 'acolyte',
         additional_info: '',

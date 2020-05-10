@@ -49,6 +49,7 @@ export class CharacterBaseFormComponent implements OnInit {
 
     if (valid) {
       this.characterBaseFormSubmitted.emit(value);
+      this.characterBaseForm.reset();
     }
   }
 }

@@ -49,6 +49,7 @@ export class CharacterEquipmentFormComponent implements OnInit {
 
     if (valid) {
       this.characterEquipmentFormSubmitted.emit(value);
+      this.characterEquipmentForm.reset();
     }
   }
 }
