@@ -11,6 +11,7 @@ import { CharacterEquipmentFormComponent } from './forms/character-equipment-for
 import { CharacterTraitsFormComponent } from './forms/character-traits-form/character-traits-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { CharacterInformationTerminalComponent } from './character-information-terminal/character-information-terminal.component';
+import { CharacterAbilitiesComponent } from './character-abilities/character-abilities.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CharacterInformationTerminalComponent } from './character-information-t
     CharacterEquipmentFormComponent,
     CharacterTraitsFormComponent,
     CharacterInformationTerminalComponent,
+    CharacterAbilitiesComponent,
   ],
   imports: [CommonModule, SharedModule, BuilderRoutingModule],
 })

@@ -1,0 +1,21 @@
+<div class="character-abilities">
+  <ul class="character-abilities__list">
+    <li class="character-abilities__list-item">Strength: ({{ strength }})</li>
+    <li class="character-abilities__list-item">Dexterity: ({{ dexterity }})</li>
+    <li class="character-abilities__list-item">
+      Constitution: ({{ constitution }})
+    </li>
+    <li class="character-abilities__list-item">
+      Intelligence: ({{ intelligence }})
+    </li>
+    <li class="character-abilities__list-item">Wisdom: ({{ wisdom }})</li>
+    <li class="character-abilities__list-item">Charisma: ({{ charisma }})</li>
+  </ul>
+
+  <app-button
+    *ngIf="!isEditing"
+    [type]="'button'"
+    [text]="'Edit Abilities'"
+    (click)="editAbilities()"
+  ></app-button>
+</div>

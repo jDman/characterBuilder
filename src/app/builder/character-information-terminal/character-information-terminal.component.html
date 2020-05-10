@@ -15,11 +15,23 @@
   <div class="character-information-terminal__window" [ngSwitch]="selection">
     <div *ngSwitchCase="'abilities'">
       <h2>Abilities:</h2>
-      {{ abilities | json }}
       <app-character-abilities-form
         *ngIf="!abilities"
         (characterAbilitiesFormSubmitted)="submitAbilities($event)"
       ></app-character-abilities-form>
+
+      <app-character-abilities
+        *ngIf="abilities"
+        [strength]="abilities.strength"
+        [dexterity]="abilities.dexterity"
+        [constitution]="abilities.constitution"
+        [intelligence]="abilities.intelligence"
+        [wisdom]="abilities.wisdom"
+        [charisma]="abilities.charisma"
+        [isEditing]="isEditing"
+        (editAbilitiesData)="editAbilities()"
+      >
+      </app-character-abilities>
     </div>
     <div
       *ngSwitchCase="'equipment'"

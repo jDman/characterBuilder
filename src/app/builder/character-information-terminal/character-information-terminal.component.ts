@@ -37,14 +37,6 @@ export class CharacterInformationTerminalComponent
   abilities: CharacterAbilities;
   equipment: CharacterEquipment;
   traits: CharacterTraits;
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private abilitiesService: CharacterAbilitiesService,
-    private equipmentService: CharacterEquipmentService,
-    private traitsService: CharacterTraitsService
-  ) {}
-
   characterInfoOptions = [
     {
       title: 'Abilities',
@@ -56,8 +48,15 @@ export class CharacterInformationTerminalComponent
       title: 'Traits',
     },
   ];
-
   selection = 'abilities';
+  isEditing = false;
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private abilitiesService: CharacterAbilitiesService,
+    private equipmentService: CharacterEquipmentService,
+    private traitsService: CharacterTraitsService
+  ) {}
 
   ngOnInit() {
     combineLatest(
@@ -78,6 +77,10 @@ export class CharacterInformationTerminalComponent
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  editAbilities(): void {
+    this.isEditing = !this.isEditing;
   }
 
   submitAbilities(abilities: CharacterAbilities): void {
