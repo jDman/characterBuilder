@@ -63,6 +63,15 @@
         (editEquipmentData)="startEditEquipment()"
       >
       </app-character-equipment>
+
+      <app-character-equipment-form
+        *ngIf="equipment && isEditingEquipment"
+        [armorClass]="equipment.armor_class"
+        [weaponProficiencies]="equipment.weapon_proficiencies"
+        [wealth]="equipment.wealth"
+        [isEditing]="isEditingEquipment"
+        (characterEquipmentFormEdited)="editEquipment($event)"
+      ></app-character-equipment-form>
     </div>
     <div *ngSwitchCase="'traits'">
       <h2>Traits:</h2>
@@ -83,6 +92,18 @@
         (editTraitsData)="startEditTraits()"
       >
       </app-character-traits>
+      <app-character-traits-form
+        *ngIf="traits && isEditingTraits"
+        [abilityScoreIncrease]="traits.ability_score_increase"
+        [age]="traits.age"
+        [alignment]="traits.alignment"
+        [morality]="traits.morality"
+        [size]="traits.size"
+        [speed]="traits.speed"
+        [languages]="traits.languages"
+        [isEditing]="isEditingTraits"
+        (characterTraitsFormSubmitted)="submitTraits($event)"
+      ></app-character-traits-form>
     </div>
   </div>
 </div>

@@ -25,12 +25,12 @@ export class CharacterAbilitiesFormComponent implements OnInit {
   @Input() intelligence: number;
   @Input() wisdom: number;
   @Input() charisma: number;
-
   @Input() isEditing: boolean;
+
   @Output() characterAbilitiesFormSubmitted = new EventEmitter<
     CharacterAbilities
   >();
-  @Output() characterAbilitiesFormEditted = new EventEmitter<
+  @Output() characterAbilitiesFormEdited = new EventEmitter<
     CharacterAbilities
   >();
 
@@ -81,7 +81,7 @@ export class CharacterAbilitiesFormComponent implements OnInit {
 
         this.characterAbilitiesForm.reset();
       } else {
-        this.characterAbilitiesFormEditted.emit(value);
+        this.characterAbilitiesFormEdited.emit(value);
       }
     }
   }

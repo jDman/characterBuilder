@@ -1,4 +1,8 @@
-<form novalidate [formGroup]="characterEquipmentForm" (submit)="create($event)">
+<form
+  novalidate
+  [formGroup]="characterEquipmentForm"
+  (submit)="submitForm($event)"
+>
   <app-input
     [name]="'Armor Class'"
     [type]="'number'"

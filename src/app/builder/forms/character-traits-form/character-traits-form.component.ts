@@ -4,10 +4,11 @@ import {
   ChangeDetectionStrategy,
   EventEmitter,
   Output,
+  Input,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { CharacterTraits } from '../../interfaces/character-traits.interface';
 
@@ -18,25 +19,48 @@ import { CharacterTraits } from '../../interfaces/character-traits.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterTraitsFormComponent implements OnInit {
+  @Input() abilityScoreIncrease: number;
+  @Input() age: number;
+  @Input() alignment: string;
+  @Input() morality: string;
+  @Input() size: string;
+  @Input() speed: number;
+  @Input() languages: string;
+  @Input() isEditing: boolean;
+
   @Output() characterTraitsFormSubmitted = new EventEmitter<CharacterTraits>();
+  @Output() characterTraitsFormEdited = new EventEmitter<CharacterTraits>();
 
-  characterTraitsForm = this.fb.group({
-    ability_score_increase: ['', Validators.required],
-    age: ['', Validators.required],
-    alignment: ['', Validators.required],
-    morality: ['', Validators.required],
-    size: ['', Validators.required],
-    speed: ['', Validators.required],
-    languages: ['', Validators.required],
-  });
+  characterTraitsForm: FormGroup;
 
-  buttonText = 'Create Character Traits';
+  buttonText: string;
   buttonType = 'submit';
   isDisabled: Observable<boolean>;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.characterTraitsForm = this.fb.group({
+      ability_score_increase: [
+        this.isEditing ? `${this.abilityScoreIncrease}` : '',
+        Validators.required,
+      ],
+      age: [this.isEditing ? `${this.age}` : '', Validators.required],
+      alignment: [
+        this.isEditing ? `${this.alignment}` : '',
+        Validators.required,
+      ],
+      morality: [this.isEditing ? `${this.morality}` : '', Validators.required],
+      size: [this.isEditing ? `${this.size}` : '', Validators.required],
+      speed: [this.isEditing ? `${this.speed}` : '', Validators.required],
+      languages: [
+        this.isEditing ? `${this.languages}` : '',
+        Validators.required,
+      ],
+    });
+
+    this.buttonText =
+      (this.isEditing ? 'Edit' : 'Create') + ' Character Traits';
     this.isDisabled = this.characterTraitsForm.statusChanges.pipe(
       map((changes) => {
         return changes === 'INVALID';
@@ -45,14 +69,18 @@ export class CharacterTraitsFormComponent implements OnInit {
     );
   }
 
-  create(event: Event): void {
+  submitForm(event: Event): void {
     event.preventDefault();
 
     const { valid, value } = this.characterTraitsForm;
 
     if (valid) {
-      this.characterTraitsFormSubmitted.emit(value);
-      this.characterTraitsForm.reset();
+      if (!this.isEditing) {
+        this.characterTraitsFormSubmitted.emit(value);
+        this.characterTraitsForm.reset();
+      } else {
+        this.characterTraitsFormEdited.emit(value);
+      }
     }
   }
 }

@@ -1,4 +1,8 @@
-<form novalidate [formGroup]="characterTraitsForm" (submit)="create($event)">
+<form
+  novalidate
+  [formGroup]="characterTraitsForm"
+  (submit)="submitForm($event)"
+>
   <app-input
     [name]="'Ability Score Increase'"
     [type]="'number'"

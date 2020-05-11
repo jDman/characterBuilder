@@ -33,14 +33,14 @@ describe('CharacterEquipmentFormComponent', () => {
     it('should not call characterEquipmentFormSubmitted emit if form invalid', () => {
       spyOn(component.characterEquipmentFormSubmitted, 'emit');
 
-      component.create(mockedSubmitEvent);
+      component.submitForm(mockedSubmitEvent);
 
       expect(
         component.characterEquipmentFormSubmitted.emit
       ).not.toHaveBeenCalled();
     });
 
-    it('should call characterEquipmentFormSubmitted emit if form valid', () => {
+    it('should call characterEquipmentFormSubmitted emit if form valid and not isEditing', () => {
       const expectedFormValues: CharacterEquipment = {
         armor_class: 2,
         weapon_proficiencies: 'martial',
@@ -58,11 +58,50 @@ describe('CharacterEquipmentFormComponent', () => {
         expectedFormValues.wealth
       );
 
-      component.create(mockedSubmitEvent);
+      component.submitForm(mockedSubmitEvent);
 
       expect(
         component.characterEquipmentFormSubmitted.emit
       ).toHaveBeenCalledWith(expectedFormValues);
+    });
+
+    it('should not call characterEquipmentFormEdited emit if form invalid and isEditing', () => {
+      spyOn(component.characterEquipmentFormEdited, 'emit');
+
+      component.submitForm(mockedSubmitEvent);
+
+      expect(
+        component.characterEquipmentFormEdited.emit
+      ).not.toHaveBeenCalled();
+    });
+
+    it('should call characterEquipmentFormEdited emit if form valid and isEditing', () => {
+      const expectedFormValues: CharacterEquipment = {
+        armor_class: 2,
+        weapon_proficiencies: 'martial',
+        wealth: 100,
+      };
+      spyOn(component.characterEquipmentFormEdited, 'emit');
+
+      component.isEditing = true;
+
+      fixture.detectChanges();
+
+      component.characterEquipmentForm.controls.armor_class.setValue(
+        expectedFormValues.armor_class
+      );
+      component.characterEquipmentForm.controls.weapon_proficiencies.setValue(
+        expectedFormValues.weapon_proficiencies
+      );
+      component.characterEquipmentForm.controls.wealth.setValue(
+        expectedFormValues.wealth
+      );
+
+      component.submitForm(mockedSubmitEvent);
+
+      expect(component.characterEquipmentFormEdited.emit).toHaveBeenCalledWith(
+        expectedFormValues
+      );
     });
   });
 });

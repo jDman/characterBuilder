@@ -77,8 +77,8 @@ describe('CharacterAbilitiesFormComponent', () => {
       ).toHaveBeenCalledWith(expectedFormValues);
     });
 
-    it('should not call characterAbilitiesFormEditted emit if form invalid and isEditing', () => {
-      spyOn(component.characterAbilitiesFormEditted, 'emit');
+    it('should not call characterAbilitiesFormEdited emit if form invalid and isEditing', () => {
+      spyOn(component.characterAbilitiesFormEdited, 'emit');
 
       component.isEditing = true;
 
@@ -87,11 +87,11 @@ describe('CharacterAbilitiesFormComponent', () => {
       component.submitForm(mockedSubmitEvent);
 
       expect(
-        component.characterAbilitiesFormEditted.emit
+        component.characterAbilitiesFormEdited.emit
       ).not.toHaveBeenCalled();
     });
 
-    it('should call characterAbilitiesFormEditted emit if form valid and isEditing', () => {
+    it('should call characterAbilitiesFormEdited emit if form valid and isEditing', () => {
       const expectedFormValues: CharacterAbilities = {
         strength: 5,
         dexterity: 7,
@@ -100,7 +100,7 @@ describe('CharacterAbilitiesFormComponent', () => {
         wisdom: 7,
         charisma: 5,
       };
-      spyOn(component.characterAbilitiesFormEditted, 'emit');
+      spyOn(component.characterAbilitiesFormEdited, 'emit');
 
       component.isEditing = true;
 
@@ -127,7 +127,7 @@ describe('CharacterAbilitiesFormComponent', () => {
 
       component.submitForm(mockedSubmitEvent);
 
-      expect(component.characterAbilitiesFormEditted.emit).toHaveBeenCalledWith(
+      expect(component.characterAbilitiesFormEdited.emit).toHaveBeenCalledWith(
         expectedFormValues
       );
     });
