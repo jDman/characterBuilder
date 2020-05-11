@@ -52,6 +52,23 @@ describe('CharacterEquipmentService', () => {
     });
   });
 
+  describe('editEquipment', () => {
+    it('should put and return data', () => {
+      const characterId = '1';
+      service
+        .editEquipment({ characterId, equipment: mockedEquipment })
+        .subscribe((res) => {
+          expect(res).toEqual({ message: 'success' });
+        });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/equipment/edit/${characterId}`
+      );
+      expect(req.request.method).toBe('PUT');
+      req.flush({ message: 'success' });
+    });
+  });
+
   describe('fetchCharacterEquipment', () => {
     it('should get and return character equipment', () => {
       const characterId = '1';

@@ -30,6 +30,18 @@ export class CharacterTraitsService {
       );
   }
 
+  editTraits(data: CharacterTraitsPostData): Observable<any> {
+    return this.http
+      .put<any>(`http://localhost:5050/api/traits/edit/${data.characterId}`, {
+        ...data.traits,
+      })
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
+
   fetchCharacterTraits(characterId: string): Observable<CharacterTraits> {
     return this.http
       .get<any>(`http://localhost:5050/api/traits/${characterId}`)

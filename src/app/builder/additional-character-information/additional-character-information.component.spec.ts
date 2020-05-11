@@ -166,4 +166,143 @@ describe('AdditionalCharacterInformationComponent', () => {
     expect(pills[1].textContent).toBe('human');
     expect(pills[2].textContent).toBe('warrior');
   });
+
+  describe('editCharacterAbilities', () => {
+    it('should call the abilities service editAbilities', () => {
+      characterAbilitiesService.editAbilities.and.callFake(() => of({}));
+      const characterAbilities = {
+        characterId: '1',
+        abilities: mockedAbilities,
+      };
+
+      component.editCharacterAbilities(characterAbilities);
+
+      expect(characterAbilitiesService.editAbilities).toHaveBeenCalledWith(
+        characterAbilities
+      );
+    });
+  });
+
+  describe('editCharacterEquipment', () => {
+    it('should call the equipment service editEquipment', () => {
+      characterEquipmentService.editEquipment.and.callFake(() => of({}));
+      const characterEquipment = {
+        characterId: '1',
+        equipment: mockedEquipment,
+      };
+
+      component.editCharacterEquipment(characterEquipment);
+
+      expect(characterEquipmentService.editEquipment).toHaveBeenCalledWith(
+        characterEquipment
+      );
+    });
+  });
+
+  describe('editCharacterTraits', () => {
+    it('should call the traits service editTraits', () => {
+      characterTraitsService.editTraits.and.callFake(() => of({}));
+      const characterTraits = {
+        characterId: '1',
+        traits: mockedTraits,
+      };
+
+      component.editCharacterTraits(characterTraits);
+
+      expect(characterTraitsService.editTraits).toHaveBeenCalledWith(
+        characterTraits
+      );
+    });
+  });
+
+  describe('fetchAbilities', () => {
+    it('should call the abilities service fetchCharacterAbilities', () => {
+      characterAbilitiesService.fetchCharacterAbilities.and.callFake(() =>
+        of({})
+      );
+      const characterId = '1';
+
+      component.fetchAbilities(characterId);
+
+      expect(
+        characterAbilitiesService.fetchCharacterAbilities
+      ).toHaveBeenCalledWith(characterId);
+    });
+  });
+
+  describe('fetchEquipment', () => {
+    it('should call the equipment service fetchCharacterEquipment', () => {
+      characterEquipmentService.fetchCharacterEquipment.and.callFake(() =>
+        of({})
+      );
+      const characterId = '1';
+
+      component.fetchEquipment(characterId);
+
+      expect(
+        characterEquipmentService.fetchCharacterEquipment
+      ).toHaveBeenCalledWith(characterId);
+    });
+  });
+
+  describe('fetchTraits', () => {
+    it('should call the traits service fetchCharacterTraits', () => {
+      characterTraitsService.fetchCharacterTraits.and.callFake(() => of({}));
+      const characterId = '1';
+
+      component.fetchTraits(characterId);
+
+      expect(characterTraitsService.fetchCharacterTraits).toHaveBeenCalledWith(
+        characterId
+      );
+    });
+  });
+
+  describe('submitCharacterAbilities', () => {
+    it('should call the abilities service createAbilities', () => {
+      characterAbilitiesService.createAbilities.and.callFake(() => of({}));
+      const characterAbilities = {
+        characterId: '1',
+        abilities: mockedAbilities,
+      };
+
+      component.submitCharacterAbilities(characterAbilities);
+
+      expect(characterAbilitiesService.createAbilities).toHaveBeenCalledWith(
+        characterAbilities
+      );
+    });
+  });
+
+  describe('submitCharacterEquipment', () => {
+    it('should call the equipment service createEquipment', () => {
+      characterEquipmentService.createEquipment.and.callFake(() => of({}));
+      const characterEquipment = {
+        characterId: '1',
+        equipment: mockedEquipment,
+      };
+
+      component.submitCharacterEquipment(characterEquipment);
+
+      expect(characterEquipmentService.createEquipment).toHaveBeenCalledWith(
+        characterEquipment
+      );
+    });
+  });
+
+  describe('submitCharacterTraits', () => {
+    it('should call the traits service createTraits', () => {
+      characterTraitsService.createTraits.and.callFake(() => of({}));
+      const characterTraits = {
+        characterId: '1',
+        traits: mockedTraits,
+      };
+
+      component.submitCharacterTraits(characterTraits);
+
+      expect(characterTraitsService.createTraits).toHaveBeenCalledWith(
+        characterTraits
+      );
+    });
+  });
 });

@@ -56,31 +56,6 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     this.traits$ = this.traitsService.traits$;
   }
 
-  fetchAbilities(id: string): void {
-    this.abilitiesService
-      .fetchCharacterAbilities(id)
-      .pipe(take(1))
-      .subscribe((abilities) =>
-        this.abilitiesService.updateAbilities(abilities)
-      );
-  }
-
-  fetchEquipment(id: string): void {
-    this.equipmentService
-      .fetchCharacterEquipment(id)
-      .pipe(take(1))
-      .subscribe((equipment) =>
-        this.equipmentService.updateEquipment(equipment)
-      );
-  }
-
-  fetchTraits(id: string): void {
-    this.traitsService
-      .fetchCharacterTraits(id)
-      .pipe(take(1))
-      .subscribe((traits) => this.traitsService.updateTraits(traits));
-  }
-
   editCharacterAbilities(data: CharacterAbilitiesPostData): void {
     this.abilitiesService
       .editAbilities(data)
@@ -109,6 +84,31 @@ export class AdditionalCharacterInformationComponent implements OnInit {
         () => this.fetchTraits(this.characterId),
         (err) => console.error(err)
       );
+  }
+
+  fetchAbilities(id: string): void {
+    this.abilitiesService
+      .fetchCharacterAbilities(id)
+      .pipe(take(1))
+      .subscribe((abilities) =>
+        this.abilitiesService.updateAbilities(abilities)
+      );
+  }
+
+  fetchEquipment(id: string): void {
+    this.equipmentService
+      .fetchCharacterEquipment(id)
+      .pipe(take(1))
+      .subscribe((equipment) =>
+        this.equipmentService.updateEquipment(equipment)
+      );
+  }
+
+  fetchTraits(id: string): void {
+    this.traitsService
+      .fetchCharacterTraits(id)
+      .pipe(take(1))
+      .subscribe((traits) => this.traitsService.updateTraits(traits));
   }
 
   submitCharacterAbilities(data: CharacterAbilitiesPostData): void {

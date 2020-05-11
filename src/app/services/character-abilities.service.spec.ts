@@ -55,6 +55,23 @@ describe('CharacterAbilitiesService', () => {
     });
   });
 
+  describe('editAbilities', () => {
+    it('should put and return data', () => {
+      const characterId = '1';
+      service
+        .editAbilities({ characterId, abilities: mockedAbilities })
+        .subscribe((res) => {
+          expect(res).toEqual({ message: 'success' });
+        });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/abilities/edit/${characterId}`
+      );
+      expect(req.request.method).toBe('PUT');
+      req.flush({ message: 'success' });
+    });
+  });
+
   describe('fetchCharacterAbilities', () => {
     it('should get and return character abilities', () => {
       const characterId = '1';

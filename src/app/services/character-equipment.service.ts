@@ -33,6 +33,19 @@ export class CharacterEquipmentService {
       );
   }
 
+  editEquipment(data: CharacterEquipmentPostData): Observable<any> {
+    return this.http
+      .put<any>(
+        `http://localhost:5050/api/equipment/edit/${data.characterId}`,
+        { ...data.equipment }
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
+
   fetchCharacterEquipment(characterId: string): Observable<CharacterEquipment> {
     return this.http
       .get<any>(`http://localhost:5050/api/equipment/${characterId}`)
