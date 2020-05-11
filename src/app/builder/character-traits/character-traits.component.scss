@@ -1,0 +1,25 @@
+.character-traits {
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(15px, auto);
+    column-gap: 5px;
+    row-gap: 5px;
+    padding: 0.4rem 0;
+  }
+
+  &__list-item {
+    font-weight: bold;
+    padding: 0.8rem 0;
+    text-align: center;
+  }
+
+  li {
+    border: 1px solid wheat;
+  }
+
+  li:nth-of-type(2n) {
+    border: none;
+    background-color: mistyrose;
+  }
+}

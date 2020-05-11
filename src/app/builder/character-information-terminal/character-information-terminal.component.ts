@@ -49,7 +49,9 @@ export class CharacterInformationTerminalComponent
     },
   ];
   selection = 'abilities';
-  isEditing = false;
+  isEditingAbilities = false;
+  isEditingEquipment = false;
+  isEditingTraits = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -80,7 +82,15 @@ export class CharacterInformationTerminalComponent
   }
 
   editAbilities(): void {
-    this.isEditing = !this.isEditing;
+    this.isEditingAbilities = !this.isEditingAbilities;
+  }
+
+  editEquipment(): void {
+    this.isEditingEquipment = !this.isEditingEquipment;
+  }
+
+  editTraits(): void {
+    this.isEditingTraits = !this.isEditingTraits;
   }
 
   submitAbilities(abilities: CharacterAbilities): void {

@@ -28,7 +28,7 @@
         [intelligence]="abilities.intelligence"
         [wisdom]="abilities.wisdom"
         [charisma]="abilities.charisma"
-        [isEditing]="isEditing"
+        [isEditing]="isEditingAbilities"
         (editAbilitiesData)="editAbilities()"
       >
       </app-character-abilities>
@@ -38,19 +38,39 @@
       class="character-information-terminal__window"
     >
       <h2>Equipment:</h2>
-      {{ equipment | json }}
       <app-character-equipment-form
         *ngIf="!equipment"
         (characterEquipmentFormSubmitted)="submitEquipment($event)"
       ></app-character-equipment-form>
+      <app-character-equipment
+        *ngIf="equipment"
+        [armorClass]="equipment.armor_class"
+        [weaponProficiencies]="equipment.weapon_proficiencies"
+        [wealth]="equipment.wealth"
+        [isEditing]="isEditingEquipment"
+        (editEquipmentData)="editEquipment()"
+      >
+      </app-character-equipment>
     </div>
     <div *ngSwitchCase="'traits'">
       <h2>Traits:</h2>
-      {{ traits | json }}
       <app-character-traits-form
         *ngIf="!traits"
         (characterTraitsFormSubmitted)="submitTraits($event)"
       ></app-character-traits-form>
+      <app-character-traits
+        *ngIf="traits"
+        [abilityScoreIncrease]="traits.ability_score_increase"
+        [age]="traits.age"
+        [alignment]="traits.alignment"
+        [morality]="traits.morality"
+        [size]="traits.size"
+        [speed]="traits.speed"
+        [languages]="traits.languages"
+        [isEditing]="isEditingTraits"
+        (editTraitsData)="editTraits()"
+      >
+      </app-character-traits>
     </div>
   </div>
 </div>

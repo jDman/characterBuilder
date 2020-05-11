@@ -1,0 +1,18 @@
+<div class="character-equipment">
+  <ul class="character-equipment__list">
+    <li class="character-equipment__list-item">
+      Armor Class: ({{ armorClass }})
+    </li>
+    <li class="character-equipment__list-item">
+      Weapon Proficiencies: ({{ weaponProficiencies }})
+    </li>
+    <li class="character-equipment__list-item">Wealth: ({{ wealth }})</li>
+  </ul>
+
+  <app-button
+    *ngIf="!isEditing"
+    [type]="'button'"
+    [text]="'Edit Equipment'"
+    (click)="editEquipment()"
+  ></app-button>
+</div>

@@ -1,0 +1,20 @@
+<div class="character-traits">
+  <ul class="character-traits__list">
+    <li class="character-traits__list-item">
+      Ability Score Increase: ({{ abilityScoreIncrease }})
+    </li>
+    <li class="character-traits__list-item">Age: ({{ age }})</li>
+    <li class="character-traits__list-item">Alignment: ({{ alignment }})</li>
+    <li class="character-traits__list-item">Morality: ({{ morality }})</li>
+    <li class="character-traits__list-item">Size: ({{ size }})</li>
+    <li class="character-traits__list-item">Speed: ({{ speed }})</li>
+    <li class="character-traits__list-item">Languages: ({{ languages }})</li>
+  </ul>
+
+  <app-button
+    *ngIf="!isEditing"
+    [type]="'button'"
+    [text]="'Edit Traits'"
+    (click)="editTraits()"
+  ></app-button>
+</div>
