@@ -81,6 +81,36 @@ export class AdditionalCharacterInformationComponent implements OnInit {
       .subscribe((traits) => this.traitsService.updateTraits(traits));
   }
 
+  editCharacterAbilities(data: CharacterAbilitiesPostData): void {
+    this.abilitiesService
+      .editAbilities(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchAbilities(this.characterId),
+        (err) => console.error(err)
+      );
+  }
+
+  editCharacterEquipment(data: CharacterEquipmentPostData): void {
+    this.equipmentService
+      .editEquipment(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchEquipment(this.characterId),
+        (err) => console.error(err)
+      );
+  }
+
+  editCharacterTraits(data: CharacterTraitsPostData): void {
+    this.traitsService
+      .editTraits(data)
+      .pipe(take(1))
+      .subscribe(
+        () => this.fetchTraits(this.characterId),
+        (err) => console.error(err)
+      );
+  }
+
   submitCharacterAbilities(data: CharacterAbilitiesPostData): void {
     this.abilitiesService
       .createAbilities(data)

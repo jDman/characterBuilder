@@ -70,18 +70,24 @@ describe('AdditionalCharacterInformationComponent', () => {
   characterAbilitiesServiceStub = {
     abilities$: of(mockedAbilities),
     fetchCharacterAbilities: jasmine.createSpy(),
+    editAbilities: jasmine.createSpy(),
+    createAbilities: jasmine.createSpy(),
     updateAbilities: jasmine.createSpy(),
   };
 
   characterEquipmentServiceStub = {
     equipment$: of(mockedEquipment),
     fetchCharacterEquipment: jasmine.createSpy(),
+    editEquipment: jasmine.createSpy(),
+    createEquipment: jasmine.createSpy(),
     updateEquipment: jasmine.createSpy(),
   };
 
   characterTraitsServiceStub = {
     traits$: of(mockedTraits),
     fetchCharacterTraits: jasmine.createSpy(),
+    editTraits: jasmine.createSpy(),
+    createTraits: jasmine.createSpy(),
     updateTraits: jasmine.createSpy(),
   };
 

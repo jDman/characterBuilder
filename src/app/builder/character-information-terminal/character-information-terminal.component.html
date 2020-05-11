@@ -29,7 +29,7 @@
         [wisdom]="abilities.wisdom"
         [charisma]="abilities.charisma"
         [isEditing]="isEditingAbilities"
-        (editAbilitiesData)="editAbilities()"
+        (editAbilitiesData)="startEditAbilities(abilities)"
       >
       </app-character-abilities>
     </div>
@@ -48,7 +48,7 @@
         [weaponProficiencies]="equipment.weapon_proficiencies"
         [wealth]="equipment.wealth"
         [isEditing]="isEditingEquipment"
-        (editEquipmentData)="editEquipment()"
+        (editEquipmentData)="startEditEquipment(equipment)"
       >
       </app-character-equipment>
     </div>
@@ -68,7 +68,7 @@
         [speed]="traits.speed"
         [languages]="traits.languages"
         [isEditing]="isEditingTraits"
-        (editTraitsData)="editTraits()"
+        (editTraitsData)="startEditTraits(traits)"
       >
       </app-character-traits>
     </div>

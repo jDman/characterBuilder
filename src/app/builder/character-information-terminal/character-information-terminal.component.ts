@@ -32,6 +32,10 @@ export class CharacterInformationTerminalComponent
   @Output() submitEquipmentData = new EventEmitter();
   @Output() submitTraitsData = new EventEmitter();
 
+  @Output() editAbilitiesData = new EventEmitter();
+  @Output() editEquipmentData = new EventEmitter();
+  @Output() editTraitsData = new EventEmitter();
+
   unsubscribe$ = new Subject<void>();
 
   abilities: CharacterAbilities;
@@ -81,16 +85,28 @@ export class CharacterInformationTerminalComponent
     this.unsubscribe$.complete();
   }
 
-  editAbilities(): void {
+  startEditAbilities(): void {
     this.isEditingAbilities = !this.isEditingAbilities;
   }
 
-  editEquipment(): void {
+  startEditEquipment(): void {
     this.isEditingEquipment = !this.isEditingEquipment;
   }
 
-  editTraits(): void {
+  startEditTraits(): void {
     this.isEditingTraits = !this.isEditingTraits;
+  }
+
+  editAbilities(abilities: CharacterAbilities): void {
+    this.editAbilitiesData.emit({ characterId: this.characterId, abilities });
+  }
+
+  editEquipment(equipment: CharacterEquipment): void {
+    this.editEquipmentData.emit({ characterId: this.characterId, equipment });
+  }
+
+  editTraits(traits: CharacterTraits): void {
+    this.editTraitsData.emit({ characterId: this.characterId, traits });
   }
 
   submitAbilities(abilities: CharacterAbilities): void {

@@ -107,6 +107,126 @@ describe('CharacterInformationTerminalComponent', () => {
     expect(selectionList[2].textContent).toBe('Traits');
   });
 
+  describe('startEditAbilities', () => {
+    it('should change the isEditingAbilities flag', () => {
+      component.startEditAbilities();
+
+      expect(component.isEditingAbilities).toBeTrue();
+    });
+  });
+
+  describe('startEditEquipment', () => {
+    it('should change the isEditingEquipment flag', () => {
+      component.startEditEquipment();
+
+      expect(component.isEditingEquipment).toBeTrue();
+    });
+  });
+
+  describe('startEditTraits', () => {
+    it('should change the isEditingTraits flag', () => {
+      component.startEditTraits();
+
+      expect(component.isEditingTraits).toBeTrue();
+    });
+  });
+
+  describe('editAbilities', () => {
+    it('should call editAbilitiesData emit with data passed to it', () => {
+      spyOn(component.editAbilitiesData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        abilities: mockedAbilities,
+      };
+
+      component.editAbilities(mockedAbilities);
+
+      expect(component.editAbilitiesData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
+  describe('editEquipment', () => {
+    it('should call editEquipmentData emit with data passed to it', () => {
+      spyOn(component.editEquipmentData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        equipment: mockedEquipment,
+      };
+
+      component.editEquipment(mockedEquipment);
+
+      expect(component.editEquipmentData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
+  describe('editTraits', () => {
+    it('should call editEquipmentData emit with data passed to it', () => {
+      spyOn(component.editTraitsData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        traits: mockedTraits,
+      };
+
+      component.editTraits(mockedTraits);
+
+      expect(component.editTraitsData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
+  describe('submitAbilities', () => {
+    it('should call submitAbilitiesData emit with data passed to it', () => {
+      spyOn(component.submitAbilitiesData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        abilities: mockedAbilities,
+      };
+
+      component.submitAbilities(mockedAbilities);
+
+      expect(component.submitAbilitiesData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
+  describe('submitEquipment', () => {
+    it('should call submitEquipmentData emit with data passed to it', () => {
+      spyOn(component.submitEquipmentData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        equipment: mockedEquipment,
+      };
+
+      component.submitEquipment(mockedEquipment);
+
+      expect(component.submitEquipmentData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
+  describe('submitTraits', () => {
+    it('should call submitTraitsData emit with data passed to it', () => {
+      spyOn(component.submitTraitsData, 'emit');
+      const expectedCallObject = {
+        characterId: component.characterId,
+        traits: mockedTraits,
+      };
+
+      component.submitTraits(mockedTraits);
+
+      expect(component.submitTraitsData.emit).toHaveBeenCalledWith(
+        expectedCallObject
+      );
+    });
+  });
+
   describe('updateSelection', () => {
     it('should update component selection property to passed in option string, lower casing it', () => {
       const option = 'Traits';

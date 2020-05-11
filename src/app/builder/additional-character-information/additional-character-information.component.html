@@ -9,6 +9,9 @@
 
   <app-character-information-terminal
     [characterId]="(character$ | async)?.id"
+    (editAbilitiesData)="editCharacterAbilities($event)"
+    (editEquipmentData)="editCharacterEquipment($event)"
+    (editTraitsData)="editCharacterTraits($event)"
     (submitAbilitiesData)="submitCharacterAbilities($event)"
     (submitEquipmentData)="submitCharacterEquipment($event)"
     (submitTraitsData)="submitCharacterTraits($event)"
