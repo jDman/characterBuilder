@@ -29,9 +29,21 @@
         [wisdom]="abilities.wisdom"
         [charisma]="abilities.charisma"
         [isEditing]="isEditingAbilities"
-        (editAbilitiesData)="startEditAbilities(abilities)"
+        (editAbilitiesData)="startEditAbilities()"
       >
       </app-character-abilities>
+
+      <app-character-abilities-form
+        *ngIf="abilities && isEditingAbilities"
+        [strength]="abilities.strength"
+        [dexterity]="abilities.dexterity"
+        [constitution]="abilities.constitution"
+        [intelligence]="abilities.intelligence"
+        [wisdom]="abilities.wisdom"
+        [charisma]="abilities.charisma"
+        [isEditing]="isEditingAbilities"
+        (characterAbilitiesFormEditted)="editAbilities($event)"
+      ></app-character-abilities-form>
     </div>
     <div
       *ngSwitchCase="'equipment'"
@@ -48,7 +60,7 @@
         [weaponProficiencies]="equipment.weapon_proficiencies"
         [wealth]="equipment.wealth"
         [isEditing]="isEditingEquipment"
-        (editEquipmentData)="startEditEquipment(equipment)"
+        (editEquipmentData)="startEditEquipment()"
       >
       </app-character-equipment>
     </div>
@@ -68,7 +80,7 @@
         [speed]="traits.speed"
         [languages]="traits.languages"
         [isEditing]="isEditingTraits"
-        (editTraitsData)="startEditTraits(traits)"
+        (editTraitsData)="startEditTraits()"
       >
       </app-character-traits>
     </div>

@@ -27,20 +27,20 @@ describe('CharacterAbilitiesFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('create', () => {
+  describe('submitForm', () => {
     const mockedSubmitEvent = new Event('submit');
 
     it('should not call characterAbilitiesFormSubmitted emit if form invalid', () => {
       spyOn(component.characterAbilitiesFormSubmitted, 'emit');
 
-      component.create(mockedSubmitEvent);
+      component.submitForm(mockedSubmitEvent);
 
       expect(
         component.characterAbilitiesFormSubmitted.emit
       ).not.toHaveBeenCalled();
     });
 
-    it('should call characterAbilitiesFormSubmitted emit if form valid', () => {
+    it('should call characterAbilitiesFormSubmitted emit if form valid and not isEditing', () => {
       const expectedFormValues: CharacterAbilities = {
         strength: 5,
         dexterity: 7,
@@ -70,11 +70,66 @@ describe('CharacterAbilitiesFormComponent', () => {
         expectedFormValues.charisma
       );
 
-      component.create(mockedSubmitEvent);
+      component.submitForm(mockedSubmitEvent);
 
       expect(
         component.characterAbilitiesFormSubmitted.emit
       ).toHaveBeenCalledWith(expectedFormValues);
+    });
+
+    it('should not call characterAbilitiesFormEditted emit if form invalid and isEditing', () => {
+      spyOn(component.characterAbilitiesFormEditted, 'emit');
+
+      component.isEditing = true;
+
+      fixture.detectChanges();
+
+      component.submitForm(mockedSubmitEvent);
+
+      expect(
+        component.characterAbilitiesFormEditted.emit
+      ).not.toHaveBeenCalled();
+    });
+
+    it('should call characterAbilitiesFormEditted emit if form valid and isEditing', () => {
+      const expectedFormValues: CharacterAbilities = {
+        strength: 5,
+        dexterity: 7,
+        constitution: 6,
+        intelligence: 8,
+        wisdom: 7,
+        charisma: 5,
+      };
+      spyOn(component.characterAbilitiesFormEditted, 'emit');
+
+      component.isEditing = true;
+
+      fixture.detectChanges();
+
+      component.characterAbilitiesForm.controls.strength.setValue(
+        expectedFormValues.strength
+      );
+      component.characterAbilitiesForm.controls.dexterity.setValue(
+        expectedFormValues.dexterity
+      );
+      component.characterAbilitiesForm.controls.constitution.setValue(
+        expectedFormValues.constitution
+      );
+      component.characterAbilitiesForm.controls.intelligence.setValue(
+        expectedFormValues.intelligence
+      );
+      component.characterAbilitiesForm.controls.wisdom.setValue(
+        expectedFormValues.wisdom
+      );
+      component.characterAbilitiesForm.controls.charisma.setValue(
+        expectedFormValues.charisma
+      );
+
+      component.submitForm(mockedSubmitEvent);
+
+      expect(component.characterAbilitiesFormEditted.emit).toHaveBeenCalledWith(
+        expectedFormValues
+      );
     });
   });
 });
