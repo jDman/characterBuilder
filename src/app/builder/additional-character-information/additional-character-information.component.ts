@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -34,7 +34,8 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     private abilitiesService: CharacterAbilitiesService,
     private equipmentService: CharacterEquipmentService,
     private traitsService: CharacterTraitsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -54,6 +55,19 @@ export class AdditionalCharacterInformationComponent implements OnInit {
     this.abilities$ = this.abilitiesService.abilities$;
     this.equipment$ = this.equipmentService.equipment$;
     this.traits$ = this.traitsService.traits$;
+  }
+
+  deleteCharacter(): void {
+    this.characterBaseService
+      .deleteCharacter(this.characterId)
+      .pipe(take(1))
+      .subscribe(
+        () => {
+          this.characterBaseService.updateCharacter(undefined);
+          this.router.navigate(['/builder']);
+        },
+        (err) => console.error(err)
+      );
   }
 
   editCharacterAbilities(data: CharacterAbilitiesPostData): void {

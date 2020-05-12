@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdditionalCharacterInformationComponent } from './additional-character-information.component';
 import { CharacterBaseService } from 'src/app/services/character-base.service';
 import { CharacterAbilitiesService } from 'src/app/services/character-abilities.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -63,6 +63,7 @@ describe('AdditionalCharacterInformationComponent', () => {
 
   characterBaseServiceStub = {
     character$: of(mockedCharacter),
+    deleteCharacter: jasmine.createSpy(),
     fetchCharacter: jasmine.createSpy(),
     updateCharacter: jasmine.createSpy(),
   };
@@ -114,11 +115,15 @@ describe('AdditionalCharacterInformationComponent', () => {
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => ({
-                  id: 123,
-                }),
+                get: () => 123,
               },
             },
+          },
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: jasmine.createSpy(),
           },
         },
       ],
@@ -156,7 +161,7 @@ describe('AdditionalCharacterInformationComponent', () => {
   });
 
   it('should have character name as heading 1', () => {
-    expect(compiled.querySelector('h1').textContent).toBe('Test');
+    expect(compiled.querySelector('h1').textContent.trim()).toBe('Test');
   });
 
   it('should display character background, classType and raceType in pills', () => {
@@ -165,6 +170,16 @@ describe('AdditionalCharacterInformationComponent', () => {
     expect(pills[0].textContent).toBe('criminal');
     expect(pills[1].textContent).toBe('human');
     expect(pills[2].textContent).toBe('warrior');
+  });
+
+  describe('deleteCharacter', () => {
+    it('should call the character base service deleteCharacter method', () => {
+      characterBaseService.deleteCharacter.and.callFake(() => of({}));
+
+      component.deleteCharacter();
+
+      expect(characterBaseService.deleteCharacter).toHaveBeenCalledWith(123);
+    });
   });
 
   describe('editCharacterAbilities', () => {

@@ -38,6 +38,35 @@ describe('CharacterBaseService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('createCharacter', () => {
+    it('should post and return data', () => {
+      service.createCharacter({ ...mockCharacterBase }).subscribe((res) => {
+        expect(res).toEqual({ message: 'success' });
+      });
+
+      const req = httpTestingController.expectOne(
+        'http://localhost:5050/api/character/add'
+      );
+      expect(req.request.method).toBe('POST');
+      req.flush({ message: 'success' });
+    });
+  });
+
+  describe('deleteCharacter', () => {
+    it('should delete and return data', () => {
+      const characterId = '1';
+      service.deleteCharacter(characterId).subscribe((res) => {
+        expect(res).toEqual({ message: 'success' });
+      });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/character/remove/${characterId}`
+      );
+      expect(req.request.method).toBe('DELETE');
+      req.flush({ message: 'success' });
+    });
+  });
+
   describe('fetchAllCharacters', () => {
     it('should get and return characters', () => {
       const mockedResult = [{ ...mockCharacterBase, id: '1' }];
@@ -65,20 +94,6 @@ describe('CharacterBaseService', () => {
       );
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', character: mockCharacterBase });
-    });
-  });
-
-  describe('createCharacter', () => {
-    it('should post and return data', () => {
-      service.createCharacter({ ...mockCharacterBase }).subscribe((res) => {
-        expect(res).toEqual({ message: 'success' });
-      });
-
-      const req = httpTestingController.expectOne(
-        'http://localhost:5050/api/character/add'
-      );
-      expect(req.request.method).toBe('POST');
-      req.flush({ message: 'success' });
     });
   });
 

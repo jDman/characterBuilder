@@ -25,6 +25,26 @@ export class CharacterBaseService {
 
   constructor(private http: HttpClient) {}
 
+  createCharacter(body: CharacterBase): Observable<any> {
+    return this.http
+      .post<any>('http://localhost:5050/api/character/add', body)
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
+
+  deleteCharacter(characterId: string): Observable<any> {
+    return this.http
+      .delete<any>(`http://localhost:5050/api/character/remove/${characterId}`)
+      .pipe(
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      );
+  }
+
   fetchAllCharacters(): Observable<Array<CharacterBase>> {
     return this.http.get<any>('http://localhost:5050/api/characters').pipe(
       map(({ characters }) => {
@@ -46,15 +66,6 @@ export class CharacterBaseService {
         return throwError(err.message);
       })
     );
-  }
-  createCharacter(body: CharacterBase): Observable<any> {
-    return this.http
-      .post<any>('http://localhost:5050/api/character/add', body)
-      .pipe(
-        catchError((err) => {
-          return throwError(err.message);
-        })
-      );
   }
 
   updateCharacters(characters: Array<CharacterBase>): void {

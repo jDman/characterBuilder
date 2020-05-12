@@ -1,5 +1,13 @@
 <div class="additional-character-information">
-  <h1>{{ (character$ | async)?.name }}</h1>
+  <h1 class="additional-character-information__characterName">
+    {{ (character$ | async)?.name }}
+    <app-button
+      class="additional-character-information__deleteButton"
+      [type]="'button'"
+      [text]="'Delete'"
+      (click)="deleteCharacter()"
+    ></app-button>
+  </h1>
 
   <p>
     <span class="pill">{{ (character$ | async)?.background }}</span>
