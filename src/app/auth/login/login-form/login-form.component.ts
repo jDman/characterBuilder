@@ -9,10 +9,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-interface LoginFormValue {
-  email: string;
-  password: string;
-}
+import { LoginFormValue } from '../../interfaces/login-form-value.interface';
 
 @Component({
   selector: 'app-login-form',

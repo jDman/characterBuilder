@@ -45,4 +45,22 @@ describe('AuthService', () => {
       req.flush({ message: 'success' });
     });
   });
+
+  describe('login', () => {
+    it('should post and return data', () => {
+      const expectedFormValues = {
+        email: 'test@test.com',
+        password: '12345678',
+      };
+      service.login(expectedFormValues).subscribe((res) => {
+        expect(res).toEqual({ message: 'success' });
+      });
+
+      const req = httpTestingController.expectOne(
+        `http://localhost:5050/api/login`
+      );
+      expect(req.request.method).toBe('POST');
+      req.flush({ message: 'success' });
+    });
+  });
 });

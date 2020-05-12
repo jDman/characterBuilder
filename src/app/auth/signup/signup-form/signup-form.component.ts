@@ -9,12 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
-interface SignupFormValue {
-  name: string;
-  email: string;
-  password: string;
-}
+import { SignupFormValue } from '../../interfaces/signup-form-value.interface';
 
 @Component({
   selector: 'app-signup-form',

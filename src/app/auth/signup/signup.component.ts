@@ -1,4 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { take } from 'rxjs/operators';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { SignupFormValue } from '../interfaces/signup-form-value.interface';
 
 @Component({
   selector: 'app-signup',
@@ -7,8 +11,9 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent {
-  constructor() {}
-  formSubmission(event): void {
-    console.log(event);
+  constructor(private authService: AuthService) {}
+
+  formSubmission(value: SignupFormValue): void {
+    this.authService.signup(value).pipe(take(1)).subscribe();
   }
 }
