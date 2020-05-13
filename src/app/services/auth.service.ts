@@ -12,11 +12,19 @@ import { isNonNull } from '../utils/isNonNull';
 })
 export class AuthService {
   private isAuthSource = new BehaviorSubject<boolean>(false);
+  private expiryDateKey = 'expiryDate';
+  private tokenKey = 'token';
+  private userIdKey = 'userId';
+
   isAuth$: Observable<boolean> = this.isAuthSource
     .asObservable()
     .pipe(filter(isNonNull), distinctUntilChanged());
 
   constructor(private http: HttpClient) {}
+
+  clearAuthSessionItem(storage: Storage, key: string): void {
+    storage.removeItem(key);
+  }
 
   getAuthSessionItem(storage: Storage, key: string): string {
     return storage.getItem(key);
@@ -28,9 +36,9 @@ export class AuthService {
     expiryDate: Date,
     userId: string
   ): void {
-    storage.setItem('expiryDate', expiryDate.toISOString());
-    storage.setItem('token', token);
-    storage.setItem('userId', userId);
+    storage.setItem(this.expiryDateKey, expiryDate.toISOString());
+    storage.setItem(this.tokenKey, token);
+    storage.setItem(this.userIdKey, userId);
   }
 
   signup(body: SignupFormValue): Observable<any> {
@@ -51,6 +59,14 @@ export class AuthService {
           return throwError(err.message);
         })
       );
+  }
+
+  logout(storage: Storage): void {
+    this.clearAuthSessionItem(storage, this.expiryDateKey);
+    this.clearAuthSessionItem(storage, this.tokenKey);
+    this.clearAuthSessionItem(storage, this.userIdKey);
+
+    this.updateIsAuth(false);
   }
 
   updateIsAuth(isAuth: boolean): void {

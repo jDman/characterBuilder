@@ -13,14 +13,16 @@ describe('AuthService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
-  const sessionStorage = {
-    getItem: jasmine.createSpy(),
-    setItem: jasmine.createSpy(),
-  };
+  let sessionStorage;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [HttpClientTestingModule] });
     service = TestBed.inject(AuthService);
+    sessionStorage = {
+      getItem: jasmine.createSpy(),
+      removeItem: jasmine.createSpy(),
+      setItem: jasmine.createSpy(),
+    };
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
@@ -67,6 +69,34 @@ describe('AuthService', () => {
       );
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
+    });
+  });
+
+  describe('logout', () => {
+    it('should call clearAuthSessionItem to remove the expiry date, token and userId then update the isAuth property', () => {
+      spyOn(service, 'updateIsAuth');
+
+      service.logout((sessionStorage as unknown) as Storage);
+
+      expect(sessionStorage.removeItem.calls.allArgs()).toEqual([
+        ['expiryDate'],
+        ['token'],
+        ['userId'],
+      ]);
+
+      expect(service.updateIsAuth).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('clearAuthSessionItem', () => {
+    it('should call removeItem on the storage passed in using the provided key', () => {
+      const tokenKey = 'token';
+      service.clearAuthSessionItem(
+        (sessionStorage as unknown) as Storage,
+        tokenKey
+      );
+
+      expect(sessionStorage.removeItem).toHaveBeenCalledWith(tokenKey);
     });
   });
 
