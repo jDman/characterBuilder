@@ -5,23 +5,31 @@ import { of } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginComponent } from './login.component';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  let authService;
+  let authService: any;
   let authServiceStub: Partial<AuthService>;
 
   authServiceStub = {
+    setAuthSessionItems: jasmine.createSpy(),
     login: jasmine.createSpy(),
+    updateIsAuth: jasmine.createSpy(),
   };
+
+  let router: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [LoginComponent],
-      providers: [{ provide: AuthService, useValue: authServiceStub }],
+      providers: [
+        { provide: AuthService, useValue: authServiceStub },
+        { provide: Router, useValue: { navigate: jasmine.createSpy() } },
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
@@ -31,6 +39,7 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
 
     authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
 
     fixture.detectChanges();
   });
@@ -40,7 +49,7 @@ describe('LoginComponent', () => {
   });
 
   describe('formSubmission', () => {
-    it('should call signup on the authService', () => {
+    it('should call login on the authService followed by setAuthSessionItems, updateIsAuth and then navigate via the router', () => {
       const expectedFormValues = {
         email: 'test@test.com',
         password: '12345678',
@@ -51,6 +60,9 @@ describe('LoginComponent', () => {
       component.formSubmission(expectedFormValues);
 
       expect(authService.login).toHaveBeenCalledWith(expectedFormValues);
+      expect(authService.setAuthSessionItems).toHaveBeenCalled();
+      expect(authService.updateIsAuth).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
     });
   });
 });
