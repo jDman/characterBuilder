@@ -18,12 +18,14 @@
 
     <li class="navigation__item">
       <a
+        *ngIf="!(isAuth$ | async)"
         class="navigation__link"
         routerLink="/auth/signup"
         routerLinkActive="active"
         >Signup</a
       >
       <a
+        *ngIf="!(isAuth$ | async)"
         class="navigation__link"
         routerLink="/auth/login"
         routerLinkActive="active"
@@ -31,6 +33,7 @@
       >
 
       <app-button
+        *ngIf="isAuth$ | async"
         class="navigation__btn"
         [type]="'button'"
         [text]="'Logout'"
