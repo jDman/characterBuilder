@@ -8,6 +8,7 @@ import { WelcomeModule } from './welcome/welcome.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BuilderModule } from './builder/builder.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent, HeaderComponent],
@@ -15,6 +16,7 @@ import { BuilderModule } from './builder/builder.module';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     WelcomeModule,
     BuilderModule,
   ],

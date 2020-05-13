@@ -1,31 +1,41 @@
 <nav class="navigation">
-  <ul class="navigation-list">
-    <li class="navigation-item">
+  <ul class="navigation__list">
+    <li class="navigation__item">
       <a
-        class="navigation-link"
+        class="navigation__link"
         routerLink="/"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         >Home</a
       >
-      <a class="navigation-link" routerLink="/builder" routerLinkActive="active"
+      <a
+        class="navigation__link"
+        routerLink="/builder"
+        routerLinkActive="active"
         >Builder</a
       >
     </li>
 
-    <li class="navigation-item">
+    <li class="navigation__item">
       <a
-        class="navigation-link"
+        class="navigation__link"
         routerLink="/auth/signup"
         routerLinkActive="active"
         >Signup</a
       >
       <a
-        class="navigation-link"
+        class="navigation__link"
         routerLink="/auth/login"
         routerLinkActive="active"
         >Login</a
       >
+
+      <app-button
+        class="navigation__btn"
+        [type]="'button'"
+        [text]="'Logout'"
+        (click)="logout()"
+      ></app-button>
     </li>
   </ul>
 </nav>
