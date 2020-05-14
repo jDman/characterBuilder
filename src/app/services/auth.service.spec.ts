@@ -115,6 +115,43 @@ describe('AuthService', () => {
     });
   });
 
+  describe('hasAuthSession', () => {
+    it('should return false if no expiry date found in storage', () => {
+      sessionStorage.getItem.and.returnValue(null);
+
+      const isAuthSession = service.hasAuthSession(
+        (sessionStorage as unknown) as Storage
+      );
+
+      expect(isAuthSession).toBe(false);
+    });
+
+    it('should return false if expiry date found in storage has expired', () => {
+      sessionStorage.getItem.and.returnValue('2020-05-13T08:56:42.801Z');
+
+      const isAuthSession = service.hasAuthSession(
+        (sessionStorage as unknown) as Storage
+      );
+
+      expect(isAuthSession).toBe(false);
+    });
+
+    it('should return true if expiry date found in storage has not expired', () => {
+      const newDate = new Date();
+      const year = newDate.getFullYear();
+      const month = newDate.getMonth();
+      const day = newDate.getDate();
+      const futureDate = new Date(year + 1, month, day);
+      sessionStorage.getItem.and.returnValue(futureDate.toISOString());
+
+      const isAuthSession = service.hasAuthSession(
+        (sessionStorage as unknown) as Storage
+      );
+
+      expect(isAuthSession).toBe(true);
+    });
+  });
+
   describe('setAuthSessionItems', () => {
     it('should call setItem on storage for the passed in token, expiry date and user id', () => {
       const token = 'abc123';

@@ -27,9 +27,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     return this.authService.isAuth$.pipe(
       take(1),
-      map((isAuth) => {
-        return this.checkIsAuth(isAuth);
-      })
+      map((isAuth) => this.checkIsAuth(isAuth))
     );
   }
 

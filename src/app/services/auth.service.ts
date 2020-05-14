@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, distinctUntilChanged } from 'rxjs/operators';
+import { catchError, filter, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { SignupFormValue } from '../auth/interfaces/signup-form-value.interface';
 import { LoginFormValue } from '../auth/interfaces/login-form-value.interface';
@@ -16,14 +16,38 @@ export class AuthService {
   private tokenKey = 'token';
   private userIdKey = 'userId';
 
-  isAuth$: Observable<boolean> = this.isAuthSource
-    .asObservable()
-    .pipe(filter(isNonNull), distinctUntilChanged());
+  isAuth$: Observable<boolean> = this.isAuthSource.asObservable().pipe(
+    filter(isNonNull),
+    map((isAuth) => {
+      if (isAuth) {
+        return isAuth;
+      }
+
+      return this.hasAuthSession(sessionStorage);
+    }),
+    distinctUntilChanged()
+  );
 
   constructor(private http: HttpClient) {}
 
   clearAuthSessionItem(storage: Storage, key: string): void {
     storage.removeItem(key);
+  }
+
+  hasAuthSession(storage: Storage): boolean {
+    const expiryDate = this.getAuthSessionItem(storage, this.expiryDateKey);
+
+    if (!expiryDate) {
+      return false;
+    }
+
+    const expired = new Date(expiryDate) <= new Date();
+
+    if (expired) {
+      return false;
+    }
+
+    return true;
   }
 
   getAuthSessionItem(storage: Storage, key: string): string {
