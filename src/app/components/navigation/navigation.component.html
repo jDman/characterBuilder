@@ -9,6 +9,7 @@
         >Home</a
       >
       <a
+        *ngIf="isAuth$ | async"
         class="navigation__link"
         routerLink="/builder"
         routerLinkActive="active"

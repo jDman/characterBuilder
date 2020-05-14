@@ -27,6 +27,7 @@ describe('CharacterBuilderComponent', () => {
   characterBaseServiceStub = {
     characters$: of(mockedCharacters),
     fetchAllCharacters: jasmine.createSpy(),
+    createCharacter: jasmine.createSpy(),
   };
 
   beforeEach(async(() => {
@@ -55,5 +56,20 @@ describe('CharacterBuilderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('submitCharacterBase', () => {
+    it('should call createCharacter on characterBaseService with passed in data followed by fetchAllCharactersthen', () => {
+      const characterDetail = { ...mockedCharacters[0] };
+
+      characterBaseService.createCharacter.and.returnValue(of({}));
+
+      component.submitCharacterBase(characterDetail);
+
+      expect(characterBaseService.createCharacter).toHaveBeenCalledWith(
+        characterDetail
+      );
+      expect(characterBaseService.fetchAllCharacters).toHaveBeenCalled();
+    });
   });
 });

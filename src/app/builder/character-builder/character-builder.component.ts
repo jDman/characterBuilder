@@ -24,6 +24,8 @@ export class CharacterBuilderComponent implements OnInit {
   submitCharacterBase(characterDetail: CharacterBase) {
     this.characterBaseService
       .createCharacter(characterDetail)
-      .subscribe((response) => console.log(response));
+      .subscribe(() =>
+        this.characterBaseService.fetchAllCharacters().pipe(take(1)).subscribe()
+      );
   }
 }
