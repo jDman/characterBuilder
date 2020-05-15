@@ -16,7 +16,7 @@
     <div *ngSwitchCase="'abilities'">
       <h2>Abilities:</h2>
       <app-character-abilities-form
-        *ngIf="!abilities"
+        *ngIf="!abilities && !isEditingTraits"
         (characterAbilitiesFormSubmitted)="submitAbilities($event)"
       ></app-character-abilities-form>
 
@@ -51,7 +51,7 @@
     >
       <h2>Equipment:</h2>
       <app-character-equipment-form
-        *ngIf="!equipment"
+        *ngIf="!equipment && !isEditingTraits"
         (characterEquipmentFormSubmitted)="submitEquipment($event)"
       ></app-character-equipment-form>
       <app-character-equipment
@@ -80,7 +80,7 @@
         (characterTraitsFormSubmitted)="submitTraits($event)"
       ></app-character-traits-form>
       <app-character-traits
-        *ngIf="traits"
+        *ngIf="traits && !isEditingTraits"
         [abilityScoreIncrease]="traits.ability_score_increase"
         [age]="traits.age"
         [alignment]="traits.alignment"

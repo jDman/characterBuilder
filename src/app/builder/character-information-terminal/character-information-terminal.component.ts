@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject, combineLatest, zip, forkJoin } from 'rxjs';
 
 import { CharacterAbilities } from '../interfaces/character-abilities.interface';
 import { CharacterEquipment } from '../interfaces/character-equipment.interface';
@@ -65,15 +65,23 @@ export class CharacterInformationTerminalComponent
   ) {}
 
   ngOnInit() {
-    combineLatest(
-      this.abilitiesService.abilities$,
-      this.equipmentService.equipment$,
-      this.traitsService.traits$
-    )
+    this.abilitiesService.abilities$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([abilities, equipment, traits]) => {
+      .subscribe((abilities) => {
         this.abilities = abilities;
+
+        this.cdr.detectChanges();
+      });
+    this.equipmentService.equipment$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((equipment) => {
         this.equipment = equipment;
+
+        this.cdr.detectChanges();
+      });
+    this.traitsService.traits$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((traits) => {
         this.traits = traits;
 
         this.cdr.detectChanges();

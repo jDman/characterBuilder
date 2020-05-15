@@ -64,6 +64,9 @@ export class AdditionalCharacterInformationComponent implements OnInit {
       .subscribe(
         () => {
           this.characterBaseService.updateCharacter(undefined);
+          this.abilitiesService.updateAbilities(undefined);
+          this.equipmentService.updateEquipment(undefined);
+          this.traitsService.updateTraits(undefined);
           this.router.navigate(['/builder']);
         },
         (err) => console.error(err)
