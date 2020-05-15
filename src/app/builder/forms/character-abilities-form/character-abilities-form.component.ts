@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { CharacterAbilities } from '../../interfaces/character-abilities.interface';
+import { isIntegerValidator } from 'src/app/validators/isInteger';
 
 @Component({
   selector: 'app-character-abilities-form',
@@ -46,18 +47,24 @@ export class CharacterAbilitiesFormComponent implements OnInit {
       strength: [this.isEditing ? `${this.strength}` : '', Validators.required],
       dexterity: [
         this.isEditing ? `${this.dexterity}` : '',
-        Validators.required,
+        [Validators.required, isIntegerValidator()],
       ],
       constitution: [
         this.isEditing ? `${this.constitution}` : '',
-        Validators.required,
+        [Validators.required, isIntegerValidator()],
       ],
       intelligence: [
         this.isEditing ? `${this.intelligence}` : '',
-        Validators.required,
+        [Validators.required, isIntegerValidator()],
       ],
-      wisdom: [this.isEditing ? `${this.wisdom}` : '', Validators.required],
-      charisma: [this.isEditing ? `${this.charisma}` : '', Validators.required],
+      wisdom: [
+        this.isEditing ? `${this.wisdom}` : '',
+        [Validators.required, isIntegerValidator()],
+      ],
+      charisma: [
+        this.isEditing ? `${this.charisma}` : '',
+        [Validators.required, isIntegerValidator()],
+      ],
     });
 
     this.buttonText =
@@ -78,8 +85,6 @@ export class CharacterAbilitiesFormComponent implements OnInit {
     if (valid) {
       if (!this.isEditing) {
         this.characterAbilitiesFormSubmitted.emit(value);
-
-        this.characterAbilitiesForm.reset();
       } else {
         this.characterAbilitiesFormEdited.emit(value);
       }

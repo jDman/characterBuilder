@@ -11,6 +11,7 @@ import { map, startWith } from 'rxjs/operators';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { CharacterEquipment } from '../../interfaces/character-equipment.interface';
+import { isIntegerValidator } from 'src/app/validators/isInteger';
 
 @Component({
   selector: 'app-character-equipment-form',
@@ -43,13 +44,16 @@ export class CharacterEquipmentFormComponent implements OnInit {
     this.characterEquipmentForm = this.fb.group({
       armor_class: [
         this.isEditing ? `${this.armorClass}` : '',
-        Validators.required,
+        [Validators.required, isIntegerValidator()],
       ],
       weapon_proficiencies: [
         this.isEditing ? `${this.weaponProficiencies}` : '',
         Validators.required,
       ],
-      wealth: [this.isEditing ? `${this.wealth}` : '', Validators.required],
+      wealth: [
+        this.isEditing ? `${this.wealth}` : '',
+        [Validators.required, isIntegerValidator()],
+      ],
     });
 
     this.buttonText =
@@ -70,7 +74,6 @@ export class CharacterEquipmentFormComponent implements OnInit {
     if (valid) {
       if (!this.isEditing) {
         this.characterEquipmentFormSubmitted.emit(value);
-        this.characterEquipmentForm.reset();
       } else {
         this.characterEquipmentFormEdited.emit(value);
       }

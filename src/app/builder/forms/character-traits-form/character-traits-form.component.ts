@@ -11,6 +11,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { CharacterTraits } from '../../interfaces/character-traits.interface';
+import { isIntegerValidator } from 'src/app/validators/isInteger';
 
 @Component({
   selector: 'app-character-traits-form',
@@ -43,16 +44,22 @@ export class CharacterTraitsFormComponent implements OnInit {
     this.characterTraitsForm = this.fb.group({
       ability_score_increase: [
         this.isEditing ? `${this.abilityScoreIncrease}` : '',
-        Validators.required,
+        [Validators.required, isIntegerValidator()],
       ],
-      age: [this.isEditing ? `${this.age}` : '', Validators.required],
+      age: [
+        this.isEditing ? `${this.age}` : '',
+        [Validators.required, isIntegerValidator()],
+      ],
       alignment: [
         this.isEditing ? `${this.alignment}` : '',
         Validators.required,
       ],
       morality: [this.isEditing ? `${this.morality}` : '', Validators.required],
       size: [this.isEditing ? `${this.size}` : '', Validators.required],
-      speed: [this.isEditing ? `${this.speed}` : '', Validators.required],
+      speed: [
+        this.isEditing ? `${this.speed}` : '',
+        [Validators.required, isIntegerValidator()],
+      ],
       languages: [
         this.isEditing ? `${this.languages}` : '',
         Validators.required,
@@ -77,7 +84,6 @@ export class CharacterTraitsFormComponent implements OnInit {
     if (valid) {
       if (!this.isEditing) {
         this.characterTraitsFormSubmitted.emit(value);
-        this.characterTraitsForm.reset();
       } else {
         this.characterTraitsFormEdited.emit(value);
       }
