@@ -18,6 +18,7 @@ describe('LoginComponent', () => {
     setAuthSessionItems: jasmine.createSpy(),
     login: jasmine.createSpy(),
     updateIsAuth: jasmine.createSpy(),
+    fetchCookie: jasmine.createSpy(),
   };
 
   let router: any;

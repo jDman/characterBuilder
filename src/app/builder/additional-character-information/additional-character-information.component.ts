@@ -47,6 +47,7 @@ export class AdditionalCharacterInformationComponent implements OnInit {
       .subscribe((character) =>
         this.characterBaseService.updateCharacter(character)
       );
+
     this.fetchAbilities(this.characterId);
     this.fetchEquipment(this.characterId);
     this.fetchTraits(this.characterId);

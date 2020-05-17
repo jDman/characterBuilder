@@ -20,7 +20,7 @@ export class CharacterTraitsService {
 
   createTraits(data: CharacterTraitsPostData): Observable<any> {
     return this.http
-      .post<any>(`http://localhost:5050/api/traits/add/${data.characterId}`, {
+      .post<any>(`/api/traits/add/${data.characterId}`, {
         ...data.traits,
       })
       .pipe(
@@ -32,7 +32,7 @@ export class CharacterTraitsService {
 
   editTraits(data: CharacterTraitsPostData): Observable<any> {
     return this.http
-      .put<any>(`http://localhost:5050/api/traits/edit/${data.characterId}`, {
+      .put<any>(`/api/traits/edit/${data.characterId}`, {
         ...data.traits,
       })
       .pipe(
@@ -43,16 +43,14 @@ export class CharacterTraitsService {
   }
 
   fetchCharacterTraits(characterId: string): Observable<CharacterTraits> {
-    return this.http
-      .get<any>(`http://localhost:5050/api/traits/${characterId}`)
-      .pipe(
-        map(({ traits }) => {
-          return traits;
-        }),
-        catchError((err) => {
-          return throwError(err.message);
-        })
-      );
+    return this.http.get<any>(`/api/traits/${characterId}`).pipe(
+      map(({ traits }) => {
+        return traits;
+      }),
+      catchError((err) => {
+        return throwError(err.message);
+      })
+    );
   }
 
   updateTraits(traits: CharacterTraits): void {

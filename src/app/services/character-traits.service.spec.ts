@@ -49,7 +49,7 @@ describe('CharacterTraitsService', () => {
         });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/traits/add/${characterId}`
+        `/api/traits/add/${characterId}`
       );
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
@@ -66,7 +66,7 @@ describe('CharacterTraitsService', () => {
         });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/traits/edit/${characterId}`
+        `/api/traits/edit/${characterId}`
       );
       expect(req.request.method).toBe('PUT');
       req.flush({ message: 'success' });
@@ -80,9 +80,7 @@ describe('CharacterTraitsService', () => {
         expect(res).toEqual(mockedTraits);
       });
 
-      const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/traits/${characterId}`
-      );
+      const req = httpTestingController.expectOne(`/api/traits/${characterId}`);
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', traits: mockedTraits });
     });

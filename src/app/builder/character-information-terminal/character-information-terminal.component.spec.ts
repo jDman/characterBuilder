@@ -49,14 +49,17 @@ describe('CharacterInformationTerminalComponent', () => {
 
   characterAbilitiesServiceStub = {
     abilities$: of(mockedAbilities),
+    updateAbilities: jasmine.createSpy(),
   };
 
   characterEquipmentServiceStub = {
     equipment$: of(mockedEquipment),
+    updateEquipment: jasmine.createSpy(),
   };
 
   characterTraitsServiceStub = {
     traits$: of(mockedTraits),
+    updateTraits: jasmine.createSpy(),
   };
 
   beforeEach(async(() => {

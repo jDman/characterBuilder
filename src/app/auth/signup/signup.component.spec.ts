@@ -15,6 +15,7 @@ describe('SignupComponent', () => {
 
   authServiceStub = {
     signup: jasmine.createSpy(),
+    fetchCookie: jasmine.createSpy(),
   };
 
   beforeEach(async(() => {

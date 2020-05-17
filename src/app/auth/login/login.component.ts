@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,8 +11,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService.fetchCookie();
+  }
 
   formSubmission(value: LoginFormValue): void {
     this.authService

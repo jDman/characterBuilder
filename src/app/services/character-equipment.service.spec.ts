@@ -45,7 +45,7 @@ describe('CharacterEquipmentService', () => {
         });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/equipment/add/${characterId}`
+        `/api/equipment/add/${characterId}`
       );
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
@@ -62,7 +62,7 @@ describe('CharacterEquipmentService', () => {
         });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/equipment/edit/${characterId}`
+        `/api/equipment/edit/${characterId}`
       );
       expect(req.request.method).toBe('PUT');
       req.flush({ message: 'success' });
@@ -77,7 +77,7 @@ describe('CharacterEquipmentService', () => {
       });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/equipment/${characterId}`
+        `/api/equipment/${characterId}`
       );
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', equipment: mockedEquipment });

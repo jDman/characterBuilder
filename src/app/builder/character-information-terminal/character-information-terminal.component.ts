@@ -89,6 +89,9 @@ export class CharacterInformationTerminalComponent
   }
 
   ngOnDestroy() {
+    this.abilitiesService.updateAbilities(undefined);
+    this.equipmentService.updateEquipment(undefined);
+    this.traitsService.updateTraits(undefined);
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

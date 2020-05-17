@@ -26,27 +26,23 @@ export class CharacterBaseService {
   constructor(private http: HttpClient) {}
 
   createCharacter(body: CharacterBase): Observable<any> {
-    return this.http
-      .post<any>('http://localhost:5050/api/character/add', body)
-      .pipe(
-        catchError((err) => {
-          return throwError(err.message);
-        })
-      );
+    return this.http.post<any>('/api/character/add', body).pipe(
+      catchError((err) => {
+        return throwError(err.message);
+      })
+    );
   }
 
   deleteCharacter(characterId: string): Observable<any> {
-    return this.http
-      .delete<any>(`http://localhost:5050/api/character/remove/${characterId}`)
-      .pipe(
-        catchError((err) => {
-          return throwError(err.message);
-        })
-      );
+    return this.http.delete<any>(`/api/character/remove/${characterId}`).pipe(
+      catchError((err) => {
+        return throwError(err.message);
+      })
+    );
   }
 
   fetchAllCharacters(): Observable<Array<CharacterBase>> {
-    return this.http.get<any>('http://localhost:5050/api/characters').pipe(
+    return this.http.get<any>('/api/characters').pipe(
       map(({ characters }) => {
         this.updateCharacters(characters);
         return characters;
@@ -58,7 +54,7 @@ export class CharacterBaseService {
   }
 
   fetchCharacter(id: string): Observable<CharacterBase> {
-    return this.http.get<any>(`http://localhost:5050/api/character/${id}`).pipe(
+    return this.http.get<any>(`/api/character/${id}`).pipe(
       map(({ character }) => {
         return character;
       }),

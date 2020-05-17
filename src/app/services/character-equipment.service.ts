@@ -22,10 +22,9 @@ export class CharacterEquipmentService {
 
   createEquipment(data: CharacterEquipmentPostData): Observable<any> {
     return this.http
-      .post<any>(
-        `http://localhost:5050/api/equipment/add/${data.characterId}`,
-        { ...data.equipment }
-      )
+      .post<any>(`/api/equipment/add/${data.characterId}`, {
+        ...data.equipment,
+      })
       .pipe(
         catchError((err) => {
           return throwError(err.message);
@@ -35,10 +34,9 @@ export class CharacterEquipmentService {
 
   editEquipment(data: CharacterEquipmentPostData): Observable<any> {
     return this.http
-      .put<any>(
-        `http://localhost:5050/api/equipment/edit/${data.characterId}`,
-        { ...data.equipment }
-      )
+      .put<any>(`/api/equipment/edit/${data.characterId}`, {
+        ...data.equipment,
+      })
       .pipe(
         catchError((err) => {
           return throwError(err.message);
@@ -47,16 +45,14 @@ export class CharacterEquipmentService {
   }
 
   fetchCharacterEquipment(characterId: string): Observable<CharacterEquipment> {
-    return this.http
-      .get<any>(`http://localhost:5050/api/equipment/${characterId}`)
-      .pipe(
-        map(({ equipment }) => {
-          return equipment;
-        }),
-        catchError((err) => {
-          return throwError(err.message);
-        })
-      );
+    return this.http.get<any>(`/api/equipment/${characterId}`).pipe(
+      map(({ equipment }) => {
+        return equipment;
+      }),
+      catchError((err) => {
+        return throwError(err.message);
+      })
+    );
   }
 
   updateEquipment(equipment: CharacterEquipment): void {

@@ -44,9 +44,7 @@ describe('CharacterBaseService', () => {
         expect(res).toEqual({ message: 'success' });
       });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:5050/api/character/add'
-      );
+      const req = httpTestingController.expectOne('/api/character/add');
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
     });
@@ -60,7 +58,7 @@ describe('CharacterBaseService', () => {
       });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/character/remove/${characterId}`
+        `/api/character/remove/${characterId}`
       );
       expect(req.request.method).toBe('DELETE');
       req.flush({ message: 'success' });
@@ -74,9 +72,7 @@ describe('CharacterBaseService', () => {
         expect(res).toEqual(mockedResult);
       });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:5050/api/characters'
-      );
+      const req = httpTestingController.expectOne('/api/characters');
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', characters: mockedResult });
     });
@@ -90,7 +86,7 @@ describe('CharacterBaseService', () => {
       });
 
       const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/character/${characterId}`
+        `/api/character/${characterId}`
       );
       expect(req.request.method).toBe('GET');
       req.flush({ message: 'success', character: mockCharacterBase });

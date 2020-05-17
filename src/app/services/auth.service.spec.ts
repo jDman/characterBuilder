@@ -35,6 +35,16 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('fetchCookie', () => {
+    it('should call options', () => {
+      service.fetchCookie();
+
+      const req = httpTestingController.expectOne(`/api/login`);
+      expect(req.request.method).toBe('OPTIONS');
+      req.flush({ message: 'success' });
+    });
+  });
+
   describe('signup', () => {
     it('should post and return data', () => {
       const expectedFormValues = {
@@ -46,9 +56,7 @@ describe('AuthService', () => {
         expect(res).toEqual({ message: 'success' });
       });
 
-      const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/signup`
-      );
+      const req = httpTestingController.expectOne(`/api/signup`);
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
     });
@@ -64,9 +72,7 @@ describe('AuthService', () => {
         expect(res).toEqual({ message: 'success' });
       });
 
-      const req = httpTestingController.expectOne(
-        `http://localhost:5050/api/login`
-      );
+      const req = httpTestingController.expectOne(`/api/login`);
       expect(req.request.method).toBe('POST');
       req.flush({ message: 'success' });
     });

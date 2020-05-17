@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, distinctUntilChanged, map } from 'rxjs/operators';
+import {
+  catchError,
+  filter,
+  distinctUntilChanged,
+  map,
+  take,
+} from 'rxjs/operators';
 
 import { SignupFormValue } from '../auth/interfaces/signup-form-value.interface';
 import { LoginFormValue } from '../auth/interfaces/login-form-value.interface';
@@ -29,6 +35,20 @@ export class AuthService {
   );
 
   constructor(private http: HttpClient) {}
+
+  fetchCookie(): void {
+    this.http
+      .options<any>('/api/login', {
+        responseType: 'text' as 'json',
+      })
+      .pipe(
+        take(1),
+        catchError((err) => {
+          return throwError(err.message);
+        })
+      )
+      .subscribe();
+  }
 
   clearAuthSessionItem(storage: Storage, key: string): void {
     storage.removeItem(key);
@@ -67,7 +87,7 @@ export class AuthService {
 
   signup(body: SignupFormValue): Observable<any> {
     return this.http
-      .post<any>('http://localhost:5050/api/signup', { ...body })
+      .post<any>('/api/signup', { ...body })
       .pipe(
         catchError((err) => {
           return throwError(err.message);
@@ -77,7 +97,7 @@ export class AuthService {
 
   login(body: LoginFormValue): Observable<any> {
     return this.http
-      .post<any>('http://localhost:5050/api/login', { ...body })
+      .post<any>('/api/login', { ...body })
       .pipe(
         catchError((err) => {
           return throwError(err.message);

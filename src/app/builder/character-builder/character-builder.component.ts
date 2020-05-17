@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { CharacterBase } from '../interfaces/character-base.interface';
 import { CharacterBaseService } from 'src/app/services/character-base.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-builder',
@@ -22,10 +22,8 @@ export class CharacterBuilderComponent implements OnInit {
   }
 
   submitCharacterBase(characterDetail: CharacterBase) {
-    this.characterBaseService
-      .createCharacter(characterDetail)
-      .subscribe(() =>
-        this.characterBaseService.fetchAllCharacters().pipe(take(1)).subscribe()
-      );
+    this.characterBaseService.createCharacter(characterDetail).subscribe(() => {
+      this.characterBaseService.fetchAllCharacters().pipe(take(1)).subscribe();
+    });
   }
 }
